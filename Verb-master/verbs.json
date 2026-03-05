@@ -1,0 +1,974 @@
+[
+  {
+    "infinitive": "awake",
+    "past participle": "awoke",
+    "perfect participle": "awoken",
+    "arabic": "يوقظ"
+  },
+  {
+    "infinitive": "be",
+    "past participle": "was/were",
+    "perfect participle": "been",
+    "arabic": "يكون"
+  },
+  {
+    "infinitive": "bear",
+    "past participle": "bore",
+    "perfect participle": "borne",
+    "arabic": "يتحمل"
+  },
+  {
+    "infinitive": "beat",
+    "past participle": "beat",
+    "perfect participle": "beaten",
+    "arabic": "يهزم-يضرب"
+  },
+  {
+    "infinitive": "become",
+    "past participle": "became",
+    "perfect participle": "become",
+    "arabic": "يصبح-يصير"
+  },
+  {
+    "infinitive": "begin",
+    "past participle": "begain",
+    "perfect participle": "begun",
+    "arabic": "يبدأ"
+  },
+  {
+    "infinitive": "behold",
+    "past participle": "beheld",
+    "perfect participle": "beheld",
+    "arabic": "ينظر"
+  },
+  {
+    "infinitive": "bend",
+    "past participle": "bent",
+    "perfect participle": "bent",
+    "arabic": "يطوى- ينحنى"
+  },
+  {
+    "infinitive": "bind",
+    "past participle": "bound",
+    "perfect participle": "bound",
+    "arabic": "يربط"
+  },
+  {
+    "infinitive": "bite",
+    "past participle": "bit",
+    "perfect participle": "bitten",
+    "arabic": "يعض"
+  },
+  {
+    "infinitive": "bleed",
+    "past participle": "bled",
+    "perfect participle": "bled",
+    "arabic": "ينزف"
+  },
+  {
+    "infinitive": "blow",
+    "past participle": "blew",
+    "perfect participle": "blown",
+    "arabic": "ينفخ"
+  },
+  {
+    "infinitive": "break",
+    "past participle": "broke",
+    "perfect participle": "broken",
+    "arabic": "يكسر-يحطم"
+  },
+  {
+    "infinitive": "breed",
+    "past participle": "bred",
+    "perfect participle": "bred",
+    "arabic": "يتكاثر- يربى"
+  },
+  {
+    "infinitive": "bring",
+    "past participle": "brought",
+    "perfect participle": "brought",
+    "arabic": "يحضر"
+  },
+  {
+    "infinitive": "broadcast",
+    "past participle": "broadcast",
+    "perfect participle": "broadcast",
+    "arabic": "يذيع"
+  },
+  {
+    "infinitive": "build",
+    "past participle": "built",
+    "perfect participle": "built",
+    "arabic": "يبنى"
+  },
+  {
+    "infinitive": "burn",
+    "past participle": "burnt",
+    "perfect participle": "burnt",
+    "arabic": "يحرق"
+  },
+  {
+    "infinitive": "burst",
+    "past participle": "burst",
+    "perfect participle": "burst",
+    "arabic": "ينفجر"
+  },
+  {
+    "infinitive": "buy",
+    "past participle": "bought",
+    "perfect participle": "bought",
+    "arabic": "يشترى"
+  },
+  {
+    "infinitive": "cast",
+    "past participle": "cast",
+    "perfect participle": "cast",
+    "arabic": "ألقى- صب"
+  },
+  {
+    "infinitive": "catch",
+    "past participle": "caught",
+    "perfect participle": "caught",
+    "arabic": "يمسك-يلحق ب"
+  },
+  {
+    "infinitive": "choose",
+    "past participle": "chose",
+    "perfect participle": "chosen",
+    "arabic": "يختار"
+  },
+  {
+    "infinitive": "come",
+    "past participle": "came",
+    "perfect participle": "come",
+    "arabic": "يأتى- يحضر"
+  },
+  {
+    "infinitive": "cost",
+    "past participle": "cost",
+    "perfect participle": "cost",
+    "arabic": "يتكلف"
+  },
+  {
+    "infinitive": "cut",
+    "past participle": "cut",
+    "perfect participle": "cut",
+    "arabic": "يقطع-يجرح"
+  },
+  {
+    "infinitive": "deal",
+    "past participle": "dealt",
+    "perfect participle": "dealt",
+    "arabic": "يتعامل مع"
+  },
+  {
+    "infinitive": "dig",
+    "past participle": "dug",
+    "perfect participle": "dug",
+    "arabic": "يحفر"
+  },
+  {
+    "infinitive": "do",
+    "past participle": "did",
+    "perfect participle": "done",
+    "arabic": "يفعل"
+  },
+  {
+    "infinitive": "draw",
+    "past participle": "drew",
+    "perfect participle": "drawn",
+    "arabic": "يرسم-يسحب"
+  },
+  {
+    "infinitive": "drink",
+    "past participle": "drank",
+    "perfect participle": "drunk",
+    "arabic": "يشرب"
+  },
+  {
+    "infinitive": "drive",
+    "past participle": "drove",
+    "perfect participle": "driven",
+    "arabic": "يقود- يسوق"
+  },
+  {
+    "infinitive": "dwell",
+    "past participle": "dwelt",
+    "perfect participle": "dwelt",
+    "arabic": "يسكن-يقطن"
+  },
+  {
+    "infinitive": "eat",
+    "past participle": "ate",
+    "perfect participle": "eaten",
+    "arabic": "يأكل"
+  },
+  {
+    "infinitive": "fall",
+    "past participle": "fell",
+    "perfect participle": "fallen",
+    "arabic": "يسقط"
+  },
+  {
+    "infinitive": "feed",
+    "past participle": "fed",
+    "perfect participle": "fed",
+    "arabic": "يطعم"
+  },
+  {
+    "infinitive": "feel",
+    "past participle": "felt",
+    "perfect participle": "felt",
+    "arabic": "يشعر"
+  },
+  {
+    "infinitive": "fight",
+    "past participle": "fought",
+    "perfect participle": "fought",
+    "arabic": "يصارع- يحارب"
+  },
+  {
+    "infinitive": "find",
+    "past participle": "found",
+    "perfect participle": "found",
+    "arabic": "يجد"
+  },
+  {
+    "infinitive": "flee",
+    "past participle": "fled",
+    "perfect participle": "fled",
+    "arabic": "يهرب"
+  },
+  {
+    "infinitive": "fling",
+    "past participle": "flung",
+    "perfect participle": "flung",
+    "arabic": "يرمى بقوة"
+  },
+  {
+    "infinitive": "fly",
+    "past participle": "flew",
+    "perfect participle": "flown",
+    "arabic": "يطير"
+  },
+  {
+    "infinitive": "forbid",
+    "past participle": "forbade",
+    "perfect participle": "forbidden",
+    "arabic": "يمنع"
+  },
+  {
+    "infinitive": "foresee",
+    "past participle": "foresaw",
+    "perfect participle": "foreseen",
+    "arabic": "يتوقع"
+  },
+  {
+    "infinitive": "foretell",
+    "past participle": "foretold",
+    "perfect participle": "foretold",
+    "arabic": "يتنبأ"
+  },
+  {
+    "infinitive": "forget",
+    "past participle": "forgot",
+    "perfect participle": "forgotten",
+    "arabic": "ينسى"
+  },
+  {
+    "infinitive": "forgive",
+    "past participle": "forgave",
+    "perfect participle": "forgiven",
+    "arabic": "يسامح"
+  },
+  {
+    "infinitive": "forsake",
+    "past participle": "forsook",
+    "perfect participle": "forsaken",
+    "arabic": "يتخلى  عن"
+  },
+  {
+    "infinitive": "freeze",
+    "past participle": "froze",
+    "perfect participle": "frozen",
+    "arabic": "يتجمد"
+  },
+  {
+    "infinitive": "gainsay",
+    "past participle": "gainsaid",
+    "perfect participle": "gainsaid",
+    "arabic": "يشككك ف"
+  },
+  {
+    "infinitive": "get",
+    "past participle": "got",
+    "perfect participle": "got",
+    "arabic": "يحصل عل"
+  },
+  {
+    "infinitive": "give",
+    "past participle": "gave",
+    "perfect participle": "given",
+    "arabic": "يعطى"
+  },
+  {
+    "infinitive": "go",
+    "past participle": "went",
+    "perfect participle": "gone",
+    "arabic": "يذهب"
+  },
+  {
+    "infinitive": "grind",
+    "past participle": "ground",
+    "perfect participle": "ground",
+    "arabic": "يطحن"
+  },
+  {
+    "infinitive": "grow",
+    "past participle": "grew",
+    "perfect participle": "grown",
+    "arabic": "ينمو"
+  },
+  {
+    "infinitive": "hang",
+    "past participle": "hung",
+    "perfect participle": "hung",
+    "arabic": "يعلق"
+  },
+  {
+    "infinitive": "have",
+    "past participle": "had",
+    "perfect participle": "had",
+    "arabic": "يمتلك"
+  },
+  {
+    "infinitive": "hear",
+    "past participle": "heard",
+    "perfect participle": "heard",
+    "arabic": "يسمع"
+  },
+  {
+    "infinitive": "hide",
+    "past participle": "hid",
+    "perfect participle": "hidden",
+    "arabic": "يخبأ"
+  },
+  {
+    "infinitive": "hit",
+    "past participle": "hit",
+    "perfect participle": "hit",
+    "arabic": "يضرب"
+  },
+  {
+    "infinitive": "hold",
+    "past participle": "held",
+    "perfect participle": "held",
+    "arabic": "يمسك-يعقد"
+  },
+  {
+    "infinitive": "hurt",
+    "past participle": "hurt",
+    "perfect participle": "hurt",
+    "arabic": "يؤذى"
+  },
+  {
+    "infinitive": "keep",
+    "past participle": "kept",
+    "perfect participle": "kept",
+    "arabic": "يحافظ على"
+  },
+  {
+    "infinitive": "kneel",
+    "past participle": "knelt",
+    "perfect participle": "knelt",
+    "arabic": "يركع"
+  },
+  {
+    "infinitive": "know",
+    "past participle": "knew",
+    "perfect participle": "known",
+    "arabic": "يعرف"
+  },
+  {
+    "infinitive": "lay",
+    "past participle": "laid",
+    "perfect participle": "laid",
+    "arabic": "يضع"
+  },
+  {
+    "infinitive": "lead",
+    "past participle": "led",
+    "perfect participle": "led",
+    "arabic": "يقود"
+  },
+  {
+    "infinitive": "leave",
+    "past participle": "left",
+    "perfect participle": "left",
+    "arabic": "يترك"
+  },
+  {
+    "infinitive": "lend",
+    "past participle": "lent",
+    "perfect participle": "lent",
+    "arabic": "يقرض"
+  },
+  {
+    "infinitive": "let",
+    "past participle": "let",
+    "perfect participle": "let",
+    "arabic": "يدع"
+  },
+  {
+    "infinitive": "lie",
+    "past participle": "lay",
+    "perfect participle": "lain",
+    "arabic": "يتكىء-يستلقى"
+  },
+  {
+    "infinitive": "lose",
+    "past participle": "lost",
+    "perfect participle": "lost",
+    "arabic": "يفقد"
+  },
+  {
+    "infinitive": "make",
+    "past participle": "made",
+    "perfect participle": "made",
+    "arabic": "يصنع"
+  },
+  {
+    "infinitive": "mean",
+    "past participle": "meant",
+    "perfect participle": "meant",
+    "arabic": "يعنى-يقصد"
+  },
+  {
+    "infinitive": "meet",
+    "past participle": "met",
+    "perfect participle": "met",
+    "arabic": "يلتقى- يقابل"
+  },
+  {
+    "infinitive": "mislay",
+    "past participle": "mislaid",
+    "perfect participle": "mislaid",
+    "arabic": "يفقد"
+  },
+  {
+    "infinitive": "mistake",
+    "past participle": "mistook",
+    "perfect participle": "mistaken",
+    "arabic": "يخطىء"
+  },
+  {
+    "infinitive": "overcome",
+    "past participle": "overcame",
+    "perfect participle": "overcome",
+    "arabic": "يتغلب على"
+  },
+  {
+    "infinitive": "overdo",
+    "past participle": "overdid",
+    "perfect participle": "overdone",
+    "arabic": "يبالغ فى شىء"
+  },
+  {
+    "infinitive": "overeat",
+    "past participle": "overate",
+    "perfect participle": "overeaten",
+    "arabic": "يبالغ فى الاكل"
+  },
+  {
+    "infinitive": "overhang",
+    "past participle": "overhung",
+    "perfect participle": "overhung",
+    "arabic": "يغطى من اعلى"
+  },
+  {
+    "infinitive": "overhear",
+    "past participle": "overheard",
+    "perfect participle": "overheard",
+    "arabic": "يسترق السمع"
+  },
+  {
+    "infinitive": "override",
+    "past participle": "overrode",
+    "perfect participle": "overridden",
+    "arabic": "يفرض قرار"
+  },
+  {
+    "infinitive": "overrun",
+    "past participle": "overran",
+    "perfect participle": "overrun",
+    "arabic": "يملأ مكان"
+  },
+  {
+    "infinitive": "oversleep",
+    "past participle": "overslept",
+    "perfect participle": "overslept",
+    "arabic": "تجاوز  فى النوم"
+  },
+  {
+    "infinitive": "overtake",
+    "past participle": "overtook",
+    "perfect participle": "overtaken",
+    "arabic": "يتخطى"
+  },
+  {
+    "infinitive": "overwrite",
+    "past participle": "overwrote",
+    "perfect participle": "overwritten",
+    "arabic": "يمحوبالكتابة"
+  },
+  {
+    "infinitive": "partake",
+    "past participle": "partook",
+    "perfect participle": "partaken",
+    "arabic": "يشارك"
+  },
+  {
+    "infinitive": "pay",
+    "past participle": "paid",
+    "perfect participle": "paid",
+    "arabic": "يدفع"
+  },
+  {
+    "infinitive": "proofread",
+    "past participle": "proofread",
+    "perfect participle": "proofread",
+    "arabic": "يراحع نص"
+  },
+  {
+    "infinitive": "put",
+    "past participle": "put",
+    "perfect participle": "put",
+    "arabic": "يضع"
+  },
+  {
+    "infinitive": "quit",
+    "past participle": "quit",
+    "perfect participle": "quit",
+    "arabic": "ينسحب"
+  },
+  {
+    "infinitive": "read",
+    "past participle": "read",
+    "perfect participle": "read",
+    "arabic": "يقرأ"
+  },
+  {
+    "infinitive": "rend",
+    "past participle": "rent",
+    "perfect participle": "rent",
+    "arabic": "يمزق"
+  },
+  {
+    "infinitive": "rid",
+    "past participle": "rid",
+    "perfect participle": "rid",
+    "arabic": "يتخلص من"
+  },
+  {
+    "infinitive": "ride",
+    "past participle": "rode",
+    "perfect participle": "ridden",
+    "arabic": "يركب-يمتطى"
+  },
+  {
+    "infinitive": "ring",
+    "past participle": "rang",
+    "perfect participle": "rung",
+    "arabic": "يدق-يهاتف"
+  },
+  {
+    "infinitive": "rise",
+    "past participle": "rose",
+    "perfect participle": "risen",
+    "arabic": "يرتفع"
+  },
+  {
+    "infinitive": "run",
+    "past participle": "ran",
+    "perfect participle": "run",
+    "arabic": "يجرى"
+  },
+  {
+    "infinitive": "saw",
+    "past participle": "sawed",
+    "perfect participle": "sawn",
+    "arabic": "يقطع بالمنشار"
+  },
+  {
+    "infinitive": "say",
+    "past participle": "said",
+    "perfect participle": "said",
+    "arabic": "يقول"
+  },
+  {
+    "infinitive": "see",
+    "past participle": "saw",
+    "perfect participle": "seen",
+    "arabic": "يرى"
+  },
+  {
+    "infinitive": "seek",
+    "past participle": "sought",
+    "perfect participle": "sought",
+    "arabic": "يبحث عن"
+  },
+  {
+    "infinitive": "sell",
+    "past participle": "sold",
+    "perfect participle": "sold",
+    "arabic": "يبيع"
+  },
+  {
+    "infinitive": "send",
+    "past participle": "sent",
+    "perfect participle": "sent",
+    "arabic": "يرسل"
+  },
+  {
+    "infinitive": "set",
+    "past participle": "set",
+    "perfect participle": "set",
+    "arabic": "يجهز-يعد"
+  },
+  {
+    "infinitive": "shake",
+    "past participle": "shook",
+    "perfect participle": "shaken",
+    "arabic": "يهز"
+  },
+  {
+    "infinitive": "shed",
+    "past participle": "shed",
+    "perfect participle": "shed",
+    "arabic": "يريق"
+  },
+  {
+    "infinitive": "shine",
+    "past participle": "shone",
+    "perfect participle": "shone",
+    "arabic": "يشرق"
+  },
+  {
+    "infinitive": "shoot",
+    "past participle": "shot",
+    "perfect participle": "shot",
+    "arabic": "يطلق النار"
+  },
+  {
+    "infinitive": "show",
+    "past participle": "showed",
+    "perfect participle": "shown",
+    "arabic": "يظهر-يعرض"
+  },
+  {
+    "infinitive": "shrink",
+    "past participle": "shrank",
+    "perfect participle": "shrunk",
+    "arabic": "ينكمش"
+  },
+  {
+    "infinitive": "shut",
+    "past participle": "shut",
+    "perfect participle": "shut",
+    "arabic": "يغلق"
+  },
+  {
+    "infinitive": "sing",
+    "past participle": "sang",
+    "perfect participle": "sung",
+    "arabic": "يغنى"
+  },
+  {
+    "infinitive": "sink",
+    "past participle": "sank",
+    "perfect participle": "sunk",
+    "arabic": "يغرق"
+  },
+  {
+    "infinitive": "sit",
+    "past participle": "sat",
+    "perfect participle": "sat",
+    "arabic": "يجلس"
+  },
+  {
+    "infinitive": "slay",
+    "past participle": "selw",
+    "perfect participle": "slain",
+    "arabic": "يقتل"
+  },
+  {
+    "infinitive": "sleep",
+    "past participle": "slept",
+    "perfect participle": "slept",
+    "arabic": "ينام"
+  },
+  {
+    "infinitive": "slide",
+    "past participle": "slid",
+    "perfect participle": "slid",
+    "arabic": "يزلق"
+  },
+  {
+    "infinitive": "slit",
+    "past participle": "slit",
+    "perfect participle": "slit",
+    "arabic": "يشق فتحة"
+  },
+  {
+    "infinitive": "speak",
+    "past participle": "spoke",
+    "perfect participle": "spoken",
+    "arabic": "يتحدث"
+  },
+  {
+    "infinitive": "speed",
+    "past participle": "sped",
+    "perfect participle": "sped",
+    "arabic": "يسرع"
+  },
+  {
+    "infinitive": "spend",
+    "past participle": "spent",
+    "perfect participle": "spent",
+    "arabic": "يقضى-يمضى"
+  },
+  {
+    "infinitive": "spill",
+    "past participle": "spilt",
+    "perfect participle": "spilt",
+    "arabic": "يسكب-يهرق"
+  },
+  {
+    "infinitive": "spin",
+    "past participle": "spun",
+    "perfect participle": "spun",
+    "arabic": "يدير"
+  },
+  {
+    "infinitive": "spit",
+    "past participle": "spat",
+    "perfect participle": "spat",
+    "arabic": "يبصق"
+  },
+  {
+    "infinitive": "split",
+    "past participle": "split",
+    "perfect participle": "split",
+    "arabic": "يفصل"
+  },
+  {
+    "infinitive": "spoil",
+    "past participle": "spoilt",
+    "perfect participle": "spoilt",
+    "arabic": "يفسد-يتلف"
+  },
+  {
+    "infinitive": "spread",
+    "past participle": "spread",
+    "perfect participle": "spread",
+    "arabic": "ينشر"
+  },
+  {
+    "infinitive": "spring",
+    "past participle": "sprang",
+    "perfect participle": "sprung",
+    "arabic": "يقفز"
+  },
+  {
+    "infinitive": "stand",
+    "past participle": "stood",
+    "perfect participle": "stood",
+    "arabic": "يقف"
+  },
+  {
+    "infinitive": "steal",
+    "past participle": "stole",
+    "perfect participle": "stolen",
+    "arabic": "يسرق"
+  },
+  {
+    "infinitive": "stick",
+    "past participle": "stuck",
+    "perfect participle": "stuck",
+    "arabic": "يلصق"
+  },
+  {
+    "infinitive": "sting",
+    "past participle": "stung",
+    "perfect participle": "stung",
+    "arabic": "يلدغ"
+  },
+  {
+    "infinitive": "stink",
+    "past participle": "stank",
+    "perfect participle": "stunk",
+    "arabic": "ينتن"
+  },
+  {
+    "infinitive": "strike",
+    "past participle": "struck",
+    "perfect participle": "struck",
+    "arabic": "يضرب"
+  },
+  {
+    "infinitive": "string",
+    "past participle": "strung",
+    "perfect participle": "strung",
+    "arabic": "يعلق"
+  },
+  {
+    "infinitive": "strive",
+    "past participle": "strove",
+    "perfect participle": "striven",
+    "arabic": "يجاهد"
+  },
+  {
+    "infinitive": "swear",
+    "past participle": "swore",
+    "perfect participle": "sworn",
+    "arabic": "يقسم"
+  },
+  {
+    "infinitive": "sweep",
+    "past participle": "swept",
+    "perfect participle": "swept",
+    "arabic": "يمسح"
+  },
+  {
+    "infinitive": "swell",
+    "past participle": "swelled",
+    "perfect participle": "swollen",
+    "arabic": "يتورم"
+  },
+  {
+    "infinitive": "swim",
+    "past participle": "swam",
+    "perfect participle": "swum",
+    "arabic": "يسبح"
+  },
+  {
+    "infinitive": "swing",
+    "past participle": "swung",
+    "perfect participle": "swung",
+    "arabic": "يتأرجح"
+  },
+  {
+    "infinitive": "take",
+    "past participle": "took",
+    "perfect participle": "taken",
+    "arabic": "يأخذ"
+  },
+  {
+    "infinitive": "teach",
+    "past participle": "taught",
+    "perfect participle": "taught",
+    "arabic": "يدرس"
+  },
+ {
+    "infinitive": "tear",
+    "past participle": "tore", 
+    "perfect participle": "torn",
+    "arabic": "يمزق"
+  },
+  {
+    "infinitive": "tell",
+    "past participle": "told",
+    "perfect participle": "told",
+    "arabic": "يخبر"
+  },
+  {
+    "infinitive": "think",
+    "past participle": "thought",
+    "perfect participle": "thought",
+    "arabic": "يفكر"
+  },
+  {
+    "infinitive": "throw",
+    "past participle": "threw",
+    "perfect participle": "thrown",
+    "arabic": "يرمى"
+  },
+  {
+    "infinitive": "thrust",
+    "past participle": "thrust",
+    "perfect participle": "thrust",
+    "arabic": "يدفع"
+  },
+  {
+    "infinitive": "tread",
+    "past participle": "trod",
+    "perfect participle": "trodden",
+    "arabic": "يطأ"
+  },
+  {
+    "infinitive": "undergo",
+    "past participle": "underwent",
+    "perfect participle": "undergone",
+    "arabic": "يتعرض ل"
+  },
+  {
+    "infinitive": "understand",
+    "past participle": "understood",
+    "perfect participle": "understood",
+    "arabic": "يفهم"
+  },
+  {
+    "infinitive": "undertake",
+    "past participle": "undertook",
+    "perfect participle": "undertaken",
+    "arabic": "يتكفل ب"
+  },
+  {
+    "infinitive": "undo",
+    "past participle": "undid",
+    "perfect participle": "undone",
+    "arabic": "يبطل عمل"
+  },
+  {
+    "infinitive": "upset",
+    "past participle": "upset",
+    "perfect participle": "upset",
+    "arabic": "يحزن"
+  },
+  {
+    "infinitive": "wake",
+    "past participle": "woke",
+    "perfect participle": "woken",
+    "arabic": "يوقظ"
+  },
+  {
+    "infinitive": "wear",
+    "past participle": "wore",
+    "perfect participle": "worn",
+    "arabic": "يرتدى"
+  },
+  {
+    "infinitive": "weave",
+    "past participle": "wove",
+    "perfect participle": "woven",
+    "arabic": "ينسج"
+  },
+  {
+    "infinitive": "win",
+    "past participle": "won",
+    "perfect participle": "won",
+    "arabic": "يفوز"
+  },
+  {
+    "infinitive": "wind",
+    "past participle": "wound",
+    "perfect participle": "wound",
+    "arabic": "يلف"
+  },
+  {
+    "infinitive": "write",
+    "past participle": "wrote",
+    "perfect participle": "written",
+    "arabic": "يكتب"
+  }
+]

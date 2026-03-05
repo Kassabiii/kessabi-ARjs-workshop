@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR.js Workshop</title>
+    <title>Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -70,6 +70,9 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
         }
+
+        .card.js-card .number { color: #34d399; }
+        .card.js-card:hover { border-color: #34d399; box-shadow: 0 8px 24px rgba(52, 211, 153, 0.15); }
 
         .card .title {
             font-size: 1.05rem;
@@ -141,39 +144,34 @@
     </style>
 </head>
 <body>
-    <h1>AR.js Workshop</h1>
-    <p class="subtitle">Pick a demo to get started</p>
+    <h1>Portfolio</h1>
+    <p class="subtitle">Pick a project to explore</p>
 
     <div class="grid">
         <a class="card" href="1-cube.html">
-            <span class="number">01</span>
+            <span class="number">AR · 01</span>
             <span class="title">Cube</span>
             <span class="desc">Render a basic 3D cube on a marker using AR.js.</span>
         </a>
         <a class="card" href="2-earth_sphere.html">
-            <span class="number">02</span>
+            <span class="number">AR · 02</span>
             <span class="title">Earth Sphere</span>
             <span class="desc">Display a textured Earth sphere on a marker.</span>
         </a>
         <a class="card" href="3-custom_marker.html">
-            <span class="number">03</span>
+            <span class="number">AR · 03</span>
             <span class="title">Custom Marker</span>
-            <span class="desc">Use a custom image marker to trigger AR content.</span>
+            <span class="desc">Switchable 3D objects on a custom image marker.</span>
         </a>
         <a class="card" href="4-location_based_Object.html">
-            <span class="number">04</span>
+            <span class="number">AR · 04</span>
             <span class="title">Location-Based Object</span>
             <span class="desc">Place a 3D object at a real-world GPS location.</span>
         </a>
-        <a class="card" href="5-display_distance_ar.html">
-            <span class="number">05</span>
-            <span class="title">Display Distance</span>
-            <span class="desc">Show the distance to a location-based AR target.</span>
-        </a>
-        <a class="card" href="6-change_and_distance.html">
-            <span class="number">06</span>
-            <span class="title">Change &amp; Distance</span>
-            <span class="desc">Dynamically update AR objects based on distance.</span>
+        <a class="card js-card" href="Verb-master/index.html">
+            <span class="number">JS</span>
+            <span class="title">Verb Master</span>
+            <span class="desc">Drag &amp; drop quiz for practicing English verb conjugations.</span>
         </a>
     </div>
 

@@ -14,6 +14,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        canvas, video { width: 100vw !important; height: 100vh !important; }
 
         #overlay {
             position: fixed; inset: 0; z-index: 9999;
@@ -90,7 +91,7 @@
             scene.setAttribute('vr-mode-ui', 'enabled: false');
             scene.setAttribute('embedded', '');
             scene.setAttribute('arjs',
-                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; displayWidth: ${res.w}; displayHeight: ${res.h}; debugUIEnabled: false;`
+                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; debugUIEnabled: false;`
             );
 
             const entity = document.createElement('a-entity');

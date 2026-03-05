@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verb Drag & Drop Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="parent">
+      <button id="nextBtn" class="cta div1">Next</button>
+      <button id="menuBtn" class="cta div2">Menu</button>
+      <h2 class="div3">Verb Drag & Drop Quiz</h2>
+      <div id="quiz" class="div4"></div>
+      <div id="difficulty" class="controls div4">
+        <span>Difficulty:</span>
+        <button id="easyBtn" type="button" class="cta">Easy Mode</button>
+        <button id="hardBtn" type="button" class="cta">Hard Mode</button>
+      </div>
+      <div id="choices" class="choices div6">Choices</div>
+      <button id="submitBtn" class="cta div7">Submit</button>
+      <div class="div8"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    function showMenuUI() {
+      document.getElementById('difficulty').style.display = '';
+      document.getElementById('quiz').style.display = 'none';
+      document.getElementById('choices').textContent = ''; // Clear choices area
+    }
+
+    function showQuizUI() {
+      document.getElementById('difficulty').style.display = 'none';
+      document.getElementById('quiz').style.display = '';
+      // Your code to render verb cards and choices here
+    }
+  </script>
+</body>
+</html>
