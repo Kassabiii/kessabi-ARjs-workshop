@@ -6,21 +6,106 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script>
     <title>Custom markers</title>
+    <style>
+        #object-selector {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 999;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #object-selector button {
+            padding: 10px 16px;
+            border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        #object-selector button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        #object-selector button.active {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
 
-        <a-assets> 
+        <a-assets>
             <img id="earth-sphere" src="earth-sphere.jpg" />
+            <a-asset-item id="saturn-model" src="saturn-orbiter.gltf"></a-asset-item>
         </a-assets>
+
         <a-marker type="custom" url="/path of the marker">
-            <a-sphere position="0 0.5 0" 
-                   material="src: #earth-sphere; transparent: true; opacity: 0.95;"
-                   animation__rotate = "property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;">
+            <!-- Earth -->
+            <a-sphere id="obj-earth" position="0 0.5 0"
+                material="src: #earth-sphere; transparent: true; opacity: 0.95;"
+                animation__rotate="property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;">
             </a-sphere>
+
+            <!-- Saturn -->
+            <a-entity id="obj-saturn" gltf-model="#saturn-model"
+                position="0 0.5 0" scale="0.5 0.5 0.5"
+                animation__rotate="property: rotation; dur: 10000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+                visible="false">
+            </a-entity>
+
+            <!-- Box -->
+            <a-box id="obj-box" position="0 0.5 0" color="#E74C3C"
+                animation__rotate="property: rotation; dur: 6000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+                visible="false">
+            </a-box>
+
+            <!-- Torus -->
+            <a-torus id="obj-torus" position="0 0.5 0" color="#9B59B6"
+                radius="0.4" radius-tubular="0.1"
+                animation__rotate="property: rotation; dur: 5000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+                visible="false">
+            </a-torus>
+
+            <!-- Cone -->
+            <a-cone id="obj-cone" position="0 0.5 0" color="#2ECC71"
+                radius-bottom="0.4" height="0.9"
+                animation__rotate="property: rotation; dur: 7000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
+                visible="false">
+            </a-cone>
         </a-marker>
+
         <a-entity camera></a-entity>
-        
+
     </a-scene>
+
+    <div id="object-selector">
+        <button class="active" onclick="selectObject('earth', this)">🌍 Earth</button>
+        <button onclick="selectObject('saturn', this)">🪐 Saturn</button>
+        <button onclick="selectObject('box', this)">📦 Box</button>
+        <button onclick="selectObject('torus', this)">💿 Torus</button>
+        <button onclick="selectObject('cone', this)">🔺 Cone</button>
+    </div>
+
+    <script>
+        const objects = ['earth', 'saturn', 'box', 'torus', 'cone'];
+
+        function selectObject(name, btn) {
+            objects.forEach(id => {
+                const el = document.getElementById('obj-' + id);
+                if (el) el.setAttribute('visible', id === name);
+            });
+
+            document.querySelectorAll('#object-selector button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
 </body>
 </html>
