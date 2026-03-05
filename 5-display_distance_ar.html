@@ -1,56 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Location-based AR.js demo</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-      #debug {
-        position: fixed;
-        z-index: 10000;
-        background-color: #fff;
-        padding: 10px;
-        top: 0;
-        left: 0;
-        display: block;
-      }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        #overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: #0f0f1a;
+            display: flex; flex-direction: column;
+        }
+
+        #map { flex: 1; }
+
+        #map-panel {
+            background: #1a1a2e;
+            border-top: 1px solid #2d2d4e;
+            padding: 1rem 1.5rem;
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #map-panel p { color: #6b7280; font-size: 0.9rem; flex: 1; min-width: 180px; }
+        #coords-display { color: #a78bfa !important; font-weight: 600; }
+
+        #launch-ar {
+            background: #a78bfa; color: #0f0f1a; border: none; border-radius: 8px;
+            padding: 0.6rem 1.4rem; font-size: 0.95rem; font-weight: 700;
+            cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+        }
+        #launch-ar:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        #debug {
+            position: fixed; z-index: 10000;
+            background: rgba(0,0,0,0.65); color: #e0e0f0;
+            padding: 6px 12px; top: 0; left: 0;
+            font-family: 'Segoe UI', sans-serif; font-size: 0.85rem;
+            display: none; border-radius: 0 0 8px 0;
+        }
     </style>
-  </head>
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+    <div id="overlay">
+        <div id="map"></div>
+        <div id="map-panel">
+            <p>Click the map to place your AR target</p>
+            <p id="coords-display">No location selected</p>
+            <button id="launch-ar" disabled>Launch AR</button>
+        </div>
+    </div>
+
+    <div id="debug"></div>
 
     <script>
-        window.addEventListener('load', () => {
-        const text = document.getElementById('text');
-        text.addEventListener('gps-entity-place-update-positon', (event) => {
-            document.getElementById('debug').textContent = `after${event.detail.distance}m`;
-            text.setAttribute('value', text.getAttribute('distanceMsg') + ' left');
+        const res = JSON.parse(localStorage.getItem('arResolution') || '{"w":1280,"h":720}');
+
+        const map = L.map('map').setView([20, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = null;
+        let pickedLat = null, pickedLng = null;
+
+        map.on('click', (e) => {
+            pickedLat = e.latlng.lat;
+            pickedLng = e.latlng.lng;
+            if (marker) marker.setLatLng(e.latlng);
+            else marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('coords-display').textContent =
+                `Lat: ${pickedLat.toFixed(5)}, Lng: ${pickedLng.toFixed(5)}`;
+            document.getElementById('launch-ar').disabled = false;
         });
+
+        document.getElementById('launch-ar').addEventListener('click', () => {
+            const scene = document.createElement('a-scene');
+            scene.setAttribute('vr-mode-ui', 'enabled: false');
+            scene.setAttribute('embedded', '');
+            scene.setAttribute('arjs',
+                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; displayWidth: ${res.w}; displayHeight: ${res.h}; debugUIEnabled: false;`
+            );
+
+            const box = document.createElement('a-box');
+            box.setAttribute('material', 'color: red');
+            box.setAttribute('scale', '15 15 15');
+            box.setAttribute('gps-entity-place', `latitude: ${pickedLat}; longitude: ${pickedLng};`);
+            scene.appendChild(box);
+
+            const text = document.createElement('a-text');
+            text.setAttribute('id', 'distText');
+            text.setAttribute('value', '');
+            text.setAttribute('look-at', '[gps-camera]');
+            text.setAttribute('scale', '30 30 30');
+            text.setAttribute('position', '0 55 0');
+            text.setAttribute('gps-entity-place', `latitude: ${pickedLat}; longitude: ${pickedLng};`);
+            scene.appendChild(text);
+
+            const camera = document.createElement('a-camera');
+            camera.setAttribute('gps-camera', '');
+            camera.setAttribute('rotation-reader', '');
+            scene.appendChild(camera);
+
+            document.body.appendChild(scene);
+            document.getElementById('overlay').style.display = 'none';
+
+            const debug = document.getElementById('debug');
+            debug.style.display = 'block';
+
+            text.addEventListener('gps-entity-place-update-positon', (event) => {
+                const dist = Math.round(event.detail.distance);
+                debug.textContent = `Distance: ${dist}m`;
+                text.setAttribute('value', `${dist}m left`);
+            });
         });
     </script>
-    
-  <body style="margin: 0; overflow: hidden;">
-    <div id="debug"></div>
-    <a-scene
-      vr-mode-ui="enabled: false"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
-    >
-      <a-box
-        material="color: red"
-        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
-        scale="15 15 15"
-      ></a-box>
-      <a-text
-        id="text"
-        value=""
-        look-at="[gps-camera]"
-        scale="30 30 30"
-        position="0 55 0"
-        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
-      ></a-text>
-      <a-camera gps-camera rotation-reader> </a-camera>
-    </a-scene>
-  </body>
+</body>
 </html>
