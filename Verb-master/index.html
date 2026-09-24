@@ -1,40 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Verb Drag & Drop Quiz</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verb Master · Irregular verb practice</title>
+  <meta name="description" content="Practise the past simple and past participle of 162 irregular English verbs, with Arabic meanings, badges and progress charts.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="parent">
-      <button id="nextBtn" class="cta div1">Next</button>
-      <button id="menuBtn" class="cta div2">Menu</button>
-      <h2 class="div3">Verb Drag & Drop Quiz</h2>
-      <div id="quiz" class="div4"></div>
-      <div id="difficulty" class="controls div4">
-        <span>Difficulty:</span>
-        <button id="easyBtn" type="button" class="cta">Easy Mode</button>
-        <button id="hardBtn" type="button" class="cta">Hard Mode</button>
-      </div>
-      <div id="choices" class="choices div6">Choices</div>
-      <button id="submitBtn" class="cta div7">Submit</button>
-      <div class="div8"></div>
-    </div>
-  </div>
-  <script src="script.js"></script>
-  <script>
-    function showMenuUI() {
-      document.getElementById('difficulty').style.display = '';
-      document.getElementById('quiz').style.display = 'none';
-      document.getElementById('choices').textContent = ''; // Clear choices area
-    }
+  <div class="app">
 
-    function showQuizUI() {
-      document.getElementById('difficulty').style.display = 'none';
-      document.getElementById('quiz').style.display = '';
-      // Your code to render verb cards and choices here
-    }
-  </script>
+    <!-- ============ Home ============ -->
+    <main id="screen-home" class="screen narrow">
+      <nav class="topbar">
+        <a href="../index.html">← Portfolio</a>
+        <button type="button" class="ghost" data-go="progress">Progress &amp; badges</button>
+      </nav>
+
+      <header class="screen">
+        <h1>Verb Master</h1>
+        <p class="lede">Practise the past simple and past participle of 162 irregular English verbs, with each meaning in Arabic.</p>
+      </header>
+
+      <section id="home-snapshot" class="panel snapshot" aria-label="Your progress" hidden></section>
+
+      <section id="home-howto" class="panel" aria-labelledby="howto-title">
+        <h2 id="howto-title" class="h3" style="font-size:1.1rem">How it works</h2>
+        <ol class="steps">
+          <li>Each round has 5 verbs, one at a time.</li>
+          <li>Tap a word to put it in the highlighted gap. On a computer you can also drag it.</li>
+          <li>Check your answers, then see your score, badges and progress.</li>
+        </ol>
+      </section>
+
+      <form id="start-form" class="panel">
+        <fieldset class="modes">
+          <legend>Choose a level</legend>
+          <label class="mode">
+            <input type="radio" name="mode" value="easy" checked>
+            <strong>Easy</strong>
+            <span>4 words to choose from for each verb</span>
+          </label>
+          <label class="mode">
+            <input type="radio" name="mode" value="hard">
+            <strong>Hard</strong>
+            <span>6 words, including look-alikes and the base form</span>
+          </label>
+        </fieldset>
+        <div class="actions">
+          <button type="submit" class="btn primary">Start a round</button>
+          <button type="button" id="start-review" class="btn" hidden></button>
+        </div>
+      </form>
+      <p id="load-error" class="panel" role="alert" hidden>The verb list didn't load. Reload the page to try again.</p>
+    </main>
+
+    <!-- ============ Round ============ -->
+    <main id="screen-play" class="screen narrow" hidden>
+      <nav class="topbar">
+        <button type="button" class="ghost" id="quit-round">← End round</button>
+        <span class="muted" id="round-mode"></span>
+      </nav>
+
+      <div class="round-head">
+        <div class="round-meta">
+          <span id="round-position">Verb 1 of 5</span>
+          <span id="round-score">0 correct</span>
+        </div>
+        <div class="pips" id="pips" aria-hidden="true"></div>
+      </div>
+
+      <article class="verb-card" aria-labelledby="infinitive">
+        <div class="verb-title">
+          <span class="infinitive" id="infinitive">begin</span>
+          <span class="arabic" id="arabic" lang="ar" dir="rtl"></span>
+        </div>
+        <div class="gaps">
+          <button type="button" class="gap" data-slot="pastSimple">
+            <span class="gap-label">Past simple</span>
+            <span class="gap-sentence">Yesterday I <span class="blank">&nbsp;</span>.</span>
+            <span class="gap-result" hidden></span>
+          </button>
+          <button type="button" class="gap" data-slot="pastParticiple">
+            <span class="gap-label">Past participle</span>
+            <span class="gap-sentence">I have <span class="blank">&nbsp;</span>.</span>
+            <span class="gap-result" hidden></span>
+          </button>
+        </div>
+      </article>
+
+      <div class="bank" id="bank" role="group" aria-label="Words to choose from"></div>
+      <p class="hint" id="hint" aria-live="polite"></p>
+      <p class="feedback" id="feedback" aria-live="polite"></p>
+      <button type="button" class="btn primary block" id="check-btn" disabled>Check answers</button>
+    </main>
+
+    <!-- ============ Results ============ -->
+    <main id="screen-results" class="screen narrow" hidden>
+      <nav class="topbar">
+        <button type="button" class="ghost" data-go="home">← Menu</button>
+        <button type="button" class="ghost" data-go="progress">Progress &amp; badges</button>
+      </nav>
+      <header class="score-hero">
+        <h1 id="results-title">Round complete</h1>
+        <p class="big" id="results-score"></p>
+        <p class="muted" id="results-sub"></p>
+      </header>
+      <section id="results-badges" aria-labelledby="new-badges-title" hidden>
+        <h2 id="new-badges-title" style="font-size:1.2rem;margin-bottom:.75rem">New badges</h2>
+        <div class="new-badges" id="new-badges"></div>
+      </section>
+      <section aria-labelledby="review-title" class="screen" style="gap:.75rem">
+        <h2 id="review-title" style="font-size:1.2rem">Your answers</h2>
+        <ul class="review-list" id="review-list"></ul>
+      </section>
+      <div class="actions">
+        <button type="button" class="btn primary" id="again-btn">Play another round</button>
+        <button type="button" class="btn" id="fix-btn" hidden>Practise these mistakes</button>
+      </div>
+    </main>
+
+    <!-- ============ Progress ============ -->
+    <main id="screen-progress" class="screen" hidden>
+      <nav class="topbar">
+        <button type="button" class="ghost" data-go="home">← Menu</button>
+        <a href="../index.html">Portfolio</a>
+      </nav>
+      <header class="screen" style="gap:.4rem">
+        <h1>Your progress</h1>
+        <p class="muted">Saved in this browser. A verb counts as mastered when you get both forms right twice in a row.</p>
+      </header>
+
+      <section class="stats" id="stats" aria-label="Summary"></section>
+
+      <section class="charts">
+        <div class="chart-card" id="stage-card">
+          <h2 style="font-size:1.1rem">Verbs by stage</h2>
+          <p class="sub">All 162 verbs</p>
+          <div id="stage-chart"></div>
+        </div>
+        <div class="chart-card" id="accuracy-card">
+          <h2 style="font-size:1.1rem">Accuracy per round</h2>
+          <p class="sub">Share of forms right, last 12 rounds</p>
+          <div id="accuracy-chart"></div>
+        </div>
+      </section>
+
+      <section class="screen" style="gap:.75rem" aria-labelledby="badges-title">
+        <h2 id="badges-title" style="font-size:1.2rem">Badges <span class="muted" id="badge-count" style="font-weight:400"></span></h2>
+        <div class="badges" id="badges"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="tricky-title">
+        <h2 id="tricky-title" style="font-size:1.1rem">Verbs to review</h2>
+        <div id="tricky"></div>
+      </section>
+
+      <div class="danger-zone">
+        <button type="button" class="btn danger" id="reset-btn">Reset progress</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
