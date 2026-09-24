@@ -102,9 +102,12 @@ body.ar-running { background: transparent; }
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    top: calc(12px + env(safe-area-inset-top, 0px));
+    /* Sits below the back button so the two never overlap on narrow phones. */
+    top: calc(62px + env(safe-area-inset-top, 0px));
     z-index: 1001;
-    max-width: calc(100vw - 150px);
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
     padding: 0.55rem 0.95rem;
     border-radius: 999px;
     background: var(--overlay);

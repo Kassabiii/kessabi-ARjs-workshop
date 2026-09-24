@@ -1,78 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>GeoAR.js demo</title>
-    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
-    <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
-    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-    <script>
-        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
-    </script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Location-based object · AR demo</title>
+    <meta name="description" content="Pin a spot on the map, then find a 3D satellite there through your phone's camera. Built with AR.js, A-Frame and Leaflet.">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="assets/ar.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script defer src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <!-- Pinned to the last commit of the archived AR.js repo (same file raw.githack served from master). -->
+    <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@024318c67121bd57045186b83b42f10c6560a34a/aframe/build/aframe-ar.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@676f3628bb477d646293f9743eda31aca556114a/dist/aframe-extras.loaders.min.js"></script>
+    <script defer src="assets/ar.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        canvas, video { width: 100vw !important; height: 100vh !important; }
-
-        #overlay {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #0f0f1a;
-            display: flex; flex-direction: column;
-        }
-
-        #map { flex: 1; }
-
+        #ar-intro.map-intro { padding: 0; display: flex; flex-direction: column; }
+        #map { flex: 1; min-height: 200px; }
         #map-panel {
-            background: #1a1a2e;
-            border-top: 1px solid #2d2d4e;
-            padding: 1rem 1.5rem;
-            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-            font-family: 'Segoe UI', sans-serif;
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+            padding: 0.75rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+            display: grid;
+            gap: 0.6rem;
         }
-
-        #map-panel p { color: #6b7280; font-size: 0.9rem; flex: 1; min-width: 180px; }
-        #coords-display { color: #a78bfa !important; font-weight: 600; }
-
-        #launch-ar {
-            background: #a78bfa; color: #0f0f1a; border: none; border-radius: 8px;
-            padding: 0.6rem 1.4rem; font-size: 0.95rem; font-weight: 700;
-            cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
-        }
-        #launch-ar:disabled { opacity: 0.35; cursor: not-allowed; }
-
-        #size-hint {
-            position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.65); color: #e0e0f0;
-            border-radius: 8px; padding: 0.4rem 1rem;
-            font-family: 'Segoe UI', sans-serif; font-size: 0.8rem;
-            z-index: 9998; pointer-events: none;
-            transition: opacity 0.5s;
-        }
+        #map-panel .ar-back { min-height: 36px; }
+        #map-panel h1 { margin: 0; font-size: 1.25rem; }
+        #map-hint { color: var(--muted); font-size: 0.95rem; line-height: 1.45; margin: 0; }
+        #coords-display { color: var(--accent); font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
     </style>
 </head>
-<body style='margin: 0; overflow: hidden;'>
-
-    <div id="overlay">
-        <div id="map"></div>
+<body class="ar-page">
+    <main id="ar-intro" class="ar-panel map-intro">
+        <div id="map" aria-label="Map: tap to place the satellite"></div>
         <div id="map-panel">
-            <p>Click the map to place your AR target</p>
-            <p id="coords-display">No location selected</p>
-            <button id="launch-ar" disabled>Launch AR</button>
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <h1>Location-based object</h1>
+            <p id="map-hint">Tap the map close to where you are (within about 200 m) to place a satellite there. Then go outside and look for it through your camera.</p>
+            <p id="coords-display">No location picked yet</p>
+            <div class="ar-actions">
+                <button id="locate-me" class="ar-btn" type="button">Show my location</button>
+                <button id="ar-start" class="ar-btn primary" type="button" disabled>Start camera</button>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <div id="size-hint">Ctrl + Scroll to resize the satellite</div>
+    <section id="ar-error" class="ar-panel" hidden aria-live="assertive">
+        <div class="ar-panel-inner">
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <div class="ar-error-icon" aria-hidden="true">!</div>
+            <h1 id="ar-error-title">Camera is blocked</h1>
+            <p id="ar-error-text"></p>
+            <div class="ar-actions"><button id="ar-retry" class="ar-btn primary" type="button">Try again</button></div>
+        </div>
+    </section>
+
+    <a id="ar-back-float" class="ar-back ar-back-float" href="index.html" hidden>← Portfolio</a>
+    <div id="ar-status" class="ar-status" role="status" aria-live="polite" hidden></div>
 
     <script>
-        const res = JSON.parse(localStorage.getItem('arResolution') || '{"w":1280,"h":720}');
+        let res = { w: 1280, h: 720 };
+        try { res = JSON.parse(localStorage.getItem('arResolution')) || res; } catch (e) {}
 
         const map = L.map('map').setView([20, 0], 2);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
+        const startBtn = document.getElementById('ar-start');
+        const hint = document.getElementById('map-hint');
         let marker = null;
         let pickedLat = null, pickedLng = null;
 
@@ -82,22 +78,59 @@
             if (marker) marker.setLatLng(e.latlng);
             else marker = L.marker(e.latlng).addTo(map);
             document.getElementById('coords-display').textContent =
-                `Lat: ${pickedLat.toFixed(5)}, Lng: ${pickedLng.toFixed(5)}`;
-            document.getElementById('launch-ar').disabled = false;
+                `Lat ${pickedLat.toFixed(5)}, Lng ${pickedLng.toFixed(5)}`;
+            startBtn.disabled = false;
         });
 
-        document.getElementById('launch-ar').addEventListener('click', () => {
+        document.getElementById('locate-me').addEventListener('click', async (e) => {
+            const btn = e.currentTarget;
+            btn.disabled = true;
+            btn.textContent = 'Finding you…';
+            try {
+                const pos = await ARShell.requestLocation();
+                map.setView([pos.coords.latitude, pos.coords.longitude], 17);
+                hint.textContent = 'This is where you are. Tap a spot nearby to place the satellite.';
+            } catch (kind) {
+                hint.textContent = kind === 'location-denied'
+                    ? 'Location is blocked, so find your area on the map yourself. The camera step still needs location access.'
+                    : 'Couldn\'t find your location. Find your area on the map yourself.';
+            }
+            btn.disabled = false;
+            btn.textContent = 'Show my location';
+        });
+
+        document.getElementById('ar-retry').addEventListener('click', () => location.reload());
+
+        startBtn.addEventListener('click', async () => {
+            if (!ARShell.librariesLoaded()) {
+                ARShell.showError('library');
+                return;
+            }
+            startBtn.disabled = true;
+            startBtn.textContent = 'Starting…';
+            try {
+                await ARShell.requestCamera();
+                await ARShell.requestLocation();
+            } catch (kind) {
+                ARShell.showError(typeof kind === 'string' ? kind : 'generic');
+                return;
+            }
+
+            ARShell.enterCamera();
+            ARShell.status('Starting camera…');
+
             const scene = document.createElement('a-scene');
             scene.setAttribute('vr-mode-ui', 'enabled: false');
             scene.setAttribute('embedded', '');
             scene.setAttribute('arjs',
-                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; debugUIEnabled: false;`
+                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; debugUIEnabled: false; cameraParametersUrl: data/camera_para.dat;`
             );
 
             const entity = document.createElement('a-entity');
             entity.setAttribute('gltf-model', 'saturn-orbiter.gltf');
             entity.setAttribute('rotation', '0 180 0');
-            entity.setAttribute('scale', '0.15 0.15 0.15');
+            // About 20 m across, so it's visible from a street or park away.
+            entity.setAttribute('scale', '3 3 3');
             entity.setAttribute('gps-entity-place', `latitude: ${pickedLat}; longitude: ${pickedLng};`);
             entity.setAttribute('animation-mixer', '');
             scene.appendChild(entity);
@@ -108,22 +141,24 @@
             scene.appendChild(camera);
 
             document.body.appendChild(scene);
-            document.getElementById('overlay').style.display = 'none';
 
-            // Auto-hide size hint after 5s
-            const hint = document.getElementById('size-hint');
-            setTimeout(() => { hint.style.opacity = '0'; }, 5000);
-            setTimeout(() => { hint.style.display = 'none'; }, 5600);
+            try {
+                await ARShell.waitForVideo();
+            } catch (kind) {
+                ARShell.showError(kind);
+                return;
+            }
+            ARShell.status('Look around for the satellite');
 
-            // Ctrl + Scroll to resize
-            let scale = 0.15;
-            window.addEventListener('wheel', (e) => {
-                if (!e.ctrlKey) return;
-                e.preventDefault();
-                const delta = e.deltaY < 0 ? 0.01 : -0.01;
-                scale = Math.max(0.01, Math.min(5, scale + delta));
-                entity.setAttribute('scale', `${scale} ${scale} ${scale}`);
-            }, { passive: false });
+            // AR.js positions the satellite in metres relative to the camera, so the
+            // distance can be read from the scene. (Its own distance event only fires
+            // when the GPS position changes.)
+            setInterval(() => {
+                const c = camera.object3D.position, p = entity.object3D.position;
+                if (p.x === 0 && p.z === 0) return; // not placed yet
+                const dist = Math.round(Math.hypot(p.x - c.x, p.z - c.z));
+                ARShell.status(`Satellite is ${dist} m away. Look around for it.`);
+            }, 1000);
         });
     </script>
 </body>
