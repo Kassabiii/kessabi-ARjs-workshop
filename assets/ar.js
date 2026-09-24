@@ -127,10 +127,26 @@ window.ARShell = (() => {
         return !!(window.AFRAME && window.THREEx);
     }
 
+    // The three marker demos share the Hiro marker, so the full how-to only shows until
+    // someone has downloaded the marker or started a camera once.
+    const SEEN_KEY = 'arHiroMarkerSeen';
+    function rememberMarker() {
+        try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
+    }
+    function setupShortIntro() {
+        let seen = false;
+        try { seen = localStorage.getItem(SEEN_KEY) === '1'; } catch (e) {}
+        if (seen) document.documentElement.classList.add('ar-returning');
+        const show = $('ar-show-howto');
+        if (show) show.addEventListener('click', () => document.documentElement.classList.remove('ar-returning'));
+        document.querySelectorAll('a[download]').forEach(a => a.addEventListener('click', rememberMarker));
+    }
+
     // Wires up a marker page: intro → permission check → scene from <template> → marker hints.
     function initMarkerPage({ templateId = 'ar-scene', onStarted } = {}) {
         const start = $('ar-start');
         $('ar-retry').addEventListener('click', () => location.reload());
+        setupShortIntro();
 
         if (!librariesLoaded()) {
             showError('library');
@@ -148,6 +164,7 @@ window.ARShell = (() => {
                 status('Starting camera…');
                 document.body.appendChild($(templateId).content.cloneNode(true));
                 await waitForVideo();
+                rememberMarker();
                 watchMarker(document.querySelector('a-marker'));
                 if (onStarted) onStarted();
             } catch (kind) {

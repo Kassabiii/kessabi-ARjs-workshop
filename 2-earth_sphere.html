@@ -6,6 +6,7 @@
     <title>Earth on a marker · AR demo</title>
     <meta name="description" content="A rotating, textured Earth that appears on the Hiro marker, built with A-Frame and AR.js.">
     <link rel="stylesheet" href="assets/ar.css">
+    <script>try { if (localStorage.getItem('arHiroMarkerSeen') === '1') document.documentElement.classList.add('ar-returning'); } catch (e) {}</script>
     <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
     <script defer src="assets/ar.js"></script>
@@ -16,19 +17,20 @@
             <a class="ar-back" href="index.html">← Portfolio</a>
             <h1>Earth on a marker</h1>
             <p>A rotating Earth appears on top of the Hiro marker when your camera sees it.</p>
-            <ol class="ar-steps">
+            <p class="ar-returning-note">Same Hiro marker as the other demos. Have it ready, then tap Start camera. <button type="button" class="ar-link" id="ar-show-howto">Show the marker</button></p>
+            <ol class="ar-steps ar-howto">
                 <li>Open the marker on another screen, or print it.</li>
                 <li>Tap Start camera and allow camera access.</li>
                 <li>Point your camera at the marker, about 30 cm away.</li>
             </ol>
-            <figure class="ar-marker">
+            <figure class="ar-marker ar-howto">
                 <img src="data/pattern-hiro.png" width="512" height="512" alt="Hiro marker: a thick black square with the word Hiro inside">
             </figure>
             <div class="ar-actions">
                 <button id="ar-start" class="ar-btn primary" type="button" disabled>Loading AR…</button>
-                <a class="ar-btn" href="data/pattern-hiro.png" download="hiro-marker.png">Download marker</a>
+                <a class="ar-btn ar-howto" href="data/pattern-hiro.png" download="hiro-marker.png">Download marker</a>
             </div>
-            <p class="ar-note">Works best on a phone. The video stays on your device.</p>
+            <p class="ar-note ar-howto">Works best on a phone. The video stays on your device.</p>
         </div>
     </main>
 
