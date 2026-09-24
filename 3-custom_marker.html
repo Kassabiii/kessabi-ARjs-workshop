@@ -2,111 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script>
-    <title>Custom markers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Object switcher · AR demo</title>
+    <meta name="description" content="Switch between Earth, Saturn and three shapes on the Hiro marker, built with A-Frame and AR.js.">
+    <link rel="stylesheet" href="assets/ar.css">
+    <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
+    <script defer src="assets/ar.js"></script>
     <style>
-        canvas, video { width: 100vw !important; height: 100vh !important; }
         #object-selector {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1001;
             display: flex;
-            gap: 10px;
-            z-index: 999;
-            flex-wrap: wrap;
-            justify-content: center;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 12px 12px calc(16px + env(safe-area-inset-bottom, 0px));
+            justify-content: safe center;
         }
         #object-selector button {
-            padding: 10px 16px;
-            border: 2px solid rgba(255,255,255,0.6);
-            border-radius: 20px;
-            background: rgba(0, 0, 0, 0.55);
-            color: white;
-            font-size: 14px;
+            flex: none;
+            min-height: 44px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: var(--overlay);
+            color: var(--ink);
+            font: inherit;
+            font-size: 0.95rem;
             cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: background 0.2s, border-color 0.2s;
         }
-        #object-selector button:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        #object-selector button.active {
-            background: rgba(255,255,255,0.3);
-            border-color: white;
-            font-weight: bold;
+        #object-selector button[aria-pressed="true"] {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--accent-ink);
+            font-weight: 700;
         }
     </style>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs>
+<body class="ar-page">
+    <main id="ar-intro" class="ar-panel">
+        <div class="ar-panel-inner">
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <h1>Object switcher</h1>
+            <p>Pick Earth, Saturn or a shape, and it appears on top of the Hiro marker.</p>
+            <ol class="ar-steps">
+                <li>Open the marker on another screen, or print it.</li>
+                <li>Tap Start camera and allow camera access.</li>
+                <li>Point your camera at the marker, then use the buttons at the bottom to switch objects.</li>
+            </ol>
+            <figure class="ar-marker">
+                <img src="data/pattern-hiro.png" width="512" height="512" alt="Hiro marker: a thick black square with the word Hiro inside">
+            </figure>
+            <div class="ar-actions">
+                <button id="ar-start" class="ar-btn primary" type="button" disabled>Loading AR…</button>
+                <a class="ar-btn" href="data/pattern-hiro.png" download="hiro-marker.png">Download marker</a>
+            </div>
+            <p class="ar-note">Works best on a phone. The video stays on your device.</p>
+        </div>
+    </main>
 
-        <a-assets>
-            <img id="earth-sphere" src="earth-sphere.jpg" />
-            <a-asset-item id="saturn-model" src="saturn-orbiter.gltf"></a-asset-item>
-        </a-assets>
+    <section id="ar-error" class="ar-panel" hidden aria-live="assertive">
+        <div class="ar-panel-inner">
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <div class="ar-error-icon" aria-hidden="true">!</div>
+            <h1 id="ar-error-title">Camera is blocked</h1>
+            <p id="ar-error-text"></p>
+            <div class="ar-actions"><button id="ar-retry" class="ar-btn primary" type="button">Try again</button></div>
+        </div>
+    </section>
 
-        <a-marker type="custom" url="/path of the marker">
-            <!-- Earth -->
-            <a-sphere id="obj-earth" position="0 0.5 0"
-                material="src: #earth-sphere; transparent: true; opacity: 0.95;"
-                animation__rotate="property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;">
-            </a-sphere>
+    <a id="ar-back-float" class="ar-back ar-back-float" href="index.html" hidden>← Portfolio</a>
+    <div id="ar-status" class="ar-status" role="status" aria-live="polite" hidden></div>
 
-            <!-- Saturn -->
-            <a-entity id="obj-saturn" gltf-model="#saturn-model"
-                position="0 0.5 0" scale="0.5 0.5 0.5"
-                animation__rotate="property: rotation; dur: 10000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-                visible="false">
-            </a-entity>
-
-            <!-- Box -->
-            <a-box id="obj-box" position="0 0.5 0" color="#E74C3C"
-                animation__rotate="property: rotation; dur: 6000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-                visible="false">
-            </a-box>
-
-            <!-- Torus -->
-            <a-torus id="obj-torus" position="0 0.5 0" color="#9B59B6"
-                radius="0.4" radius-tubular="0.1"
-                animation__rotate="property: rotation; dur: 5000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-                visible="false">
-            </a-torus>
-
-            <!-- Cone -->
-            <a-cone id="obj-cone" position="0 0.5 0" color="#2ECC71"
-                radius-bottom="0.4" height="0.9"
-                animation__rotate="property: rotation; dur: 7000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: true;"
-                visible="false">
-            </a-cone>
-        </a-marker>
-
-        <a-entity camera></a-entity>
-
-    </a-scene>
-
-    <div id="object-selector">
-        <button class="active" onclick="selectObject('earth', this)">🌍 Earth</button>
-        <button onclick="selectObject('saturn', this)">🪐 Saturn</button>
-        <button onclick="selectObject('box', this)">📦 Box</button>
-        <button onclick="selectObject('torus', this)">💿 Torus</button>
-        <button onclick="selectObject('cone', this)">🔺 Cone</button>
+    <div id="object-selector" role="group" aria-label="Object on the marker" hidden>
+        <button type="button" data-object="earth" aria-pressed="true">Earth</button>
+        <button type="button" data-object="saturn" aria-pressed="false">Saturn</button>
+        <button type="button" data-object="box" aria-pressed="false">Box</button>
+        <button type="button" data-object="torus" aria-pressed="false">Torus</button>
+        <button type="button" data-object="cone" aria-pressed="false">Cone</button>
     </div>
 
-    <script>
-        const objects = ['earth', 'saturn', 'box', 'torus', 'cone'];
+    <template id="ar-scene">
+        <a-scene embedded vr-mode-ui="enabled: false"
+            arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: data/camera_para.dat;">
+            <a-assets>
+                <img id="earth-sphere" src="earth-sphere.jpg" alt="">
+            </a-assets>
 
-        function selectObject(name, btn) {
-            objects.forEach(id => {
-                const el = document.getElementById('obj-' + id);
-                if (el) el.setAttribute('visible', id === name);
+            <a-marker type="pattern" url="data/pattern-hiro.patt">
+                <a-sphere id="obj-earth" position="0 0.5 0"
+                    material="src: #earth-sphere"
+                    animation__rotate="property: rotation; dur: 8000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;">
+                </a-sphere>
+
+                <!-- The Saturn model (600 KB) only downloads the first time it's picked. -->
+                <a-entity id="obj-saturn" position="0 0.5 0" scale="0.15 0.15 0.15"
+                    animation__rotate="property: rotation; dur: 10000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                    visible="false">
+                </a-entity>
+
+                <a-box id="obj-box" position="0 0.5 0" color="#E74C3C"
+                    animation__rotate="property: rotation; dur: 6000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                    visible="false">
+                </a-box>
+
+                <a-torus id="obj-torus" position="0 0.5 0" color="#9B59B6"
+                    radius="0.4" radius-tubular="0.1"
+                    animation__rotate="property: rotation; dur: 5000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                    visible="false">
+                </a-torus>
+
+                <a-cone id="obj-cone" position="0 0.5 0" color="#2ECC71"
+                    radius-bottom="0.4" height="0.9"
+                    animation__rotate="property: rotation; dur: 7000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                    visible="false">
+                </a-cone>
+            </a-marker>
+
+            <a-entity camera></a-entity>
+        </a-scene>
+    </template>
+
+    <script>
+        function selectObject(name) {
+            document.querySelectorAll('[id^="obj-"]').forEach(el => {
+                el.setAttribute('visible', el.id === 'obj-' + name);
+            });
+            document.querySelectorAll('#object-selector button').forEach(b => {
+                b.setAttribute('aria-pressed', String(b.dataset.object === name));
             });
 
-            document.querySelectorAll('#object-selector button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            const saturn = document.getElementById('obj-saturn');
+            if (name === 'saturn' && !saturn.hasAttribute('gltf-model')) {
+                ARShell.status('Loading Saturn…');
+                saturn.addEventListener('model-loaded', () => ARShell.status(null), { once: true });
+                saturn.addEventListener('model-error', () => ARShell.status('Saturn didn\'t load. Check your connection.'), { once: true });
+                saturn.setAttribute('gltf-model', 'saturn-orbiter.gltf');
+            }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('object-selector');
+            selector.addEventListener('click', e => {
+                const btn = e.target.closest('button[data-object]');
+                if (btn) selectObject(btn.dataset.object);
+            });
+            ARShell.initMarkerPage({ onStarted: () => { selector.hidden = false; } });
+        });
     </script>
 </body>
 </html>

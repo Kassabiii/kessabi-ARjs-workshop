@@ -2,21 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.1.7/aframe/build/aframe-ar.js"></script>
-    <title>Display Cube</title>
-    <style>
-        canvas, video { width: 100vw !important; height: 100vh !important; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Cube on a marker · AR demo</title>
+    <meta name="description" content="A red cube that appears on the Hiro marker, built with A-Frame and AR.js.">
+    <link rel="stylesheet" href="assets/ar.css">
+    <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
+    <script defer src="assets/ar.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-        <a-marker preset="hiro" type="pattern" url="code source/pattern-hiro.patt">
-            <a-box position="-0 0.5 -2" rotation="0 45 45" material="color: red;"></a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
-    </a-scene>
+<body class="ar-page">
+    <main id="ar-intro" class="ar-panel">
+        <div class="ar-panel-inner">
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <h1>Cube on a marker</h1>
+            <p>A red cube appears on top of the Hiro marker when your camera sees it.</p>
+            <ol class="ar-steps">
+                <li>Open the marker on another screen, or print it.</li>
+                <li>Tap Start camera and allow camera access.</li>
+                <li>Point your camera at the marker, about 30 cm away.</li>
+            </ol>
+            <figure class="ar-marker">
+                <img src="data/pattern-hiro.png" width="512" height="512" alt="Hiro marker: a thick black square with the word Hiro inside">
+            </figure>
+            <div class="ar-actions">
+                <button id="ar-start" class="ar-btn primary" type="button" disabled>Loading AR…</button>
+                <a class="ar-btn" href="data/pattern-hiro.png" download="hiro-marker.png">Download marker</a>
+            </div>
+            <p class="ar-note">Works best on a phone. The video stays on your device.</p>
+        </div>
+    </main>
 
+    <section id="ar-error" class="ar-panel" hidden aria-live="assertive">
+        <div class="ar-panel-inner">
+            <a class="ar-back" href="index.html">← Portfolio</a>
+            <div class="ar-error-icon" aria-hidden="true">!</div>
+            <h1 id="ar-error-title">Camera is blocked</h1>
+            <p id="ar-error-text"></p>
+            <div class="ar-actions"><button id="ar-retry" class="ar-btn primary" type="button">Try again</button></div>
+        </div>
+    </section>
+
+    <a id="ar-back-float" class="ar-back ar-back-float" href="index.html" hidden>← Portfolio</a>
+    <div id="ar-status" class="ar-status" role="status" aria-live="polite" hidden></div>
+
+    <template id="ar-scene">
+        <a-scene embedded vr-mode-ui="enabled: false"
+            arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: data/camera_para.dat;">
+            <a-marker type="pattern" url="data/pattern-hiro.patt">
+                <a-box position="0 0.5 0" rotation="0 45 45" material="color: red;"></a-box>
+            </a-marker>
+            <a-entity camera></a-entity>
+        </a-scene>
+    </template>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => ARShell.initMarkerPage());
+    </script>
 </body>
 </html>
