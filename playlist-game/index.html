@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Do You Know Your Playlist? · Portfolio</title>
+    <meta name="description" content="A Spotify guessing game: name a song from your own playlist from a 0.1 second clip. Demo, source download and setup guide.">
+    <style>
+        :root {
+            --ground: #0f0f1a;
+            --surface: #1a1a2e;
+            --raised: #22223b;
+            --line: #2d2d4e;
+            --ink: #e0e0f0;
+            --muted: #a3a6c4;
+            --accent: #a78bfa;
+            --js: #34d399;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--ground);
+            color: var(--ink);
+            font: 16px/1.6 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        main {
+            width: min(760px, 100%);
+            margin: 0 auto;
+            padding: 24px 16px 80px;
+        }
+
+        a { color: var(--accent); }
+
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 40px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .back:hover { color: var(--ink); }
+
+        .tag {
+            margin: 0 0 8px;
+            color: var(--js);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        .lede {
+            margin: 0 0 32px;
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 36em;
+        }
+
+        /* Demo */
+        .demo {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            margin: 0 0 20px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #000;
+        }
+
+        .demo video {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .demo-placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-content: center;
+            justify-items: center;
+            gap: 14px;
+            padding: 24px;
+            color: #9a9a9a;
+            text-align: center;
+        }
+
+        .demo-placeholder[hidden] { display: none; }
+
+        .bars { display: flex; align-items: flex-end; gap: 6px; height: 48px; }
+        .bars i {
+            width: 22px;
+            border-radius: 3px;
+            background: #fff;
+            transform-origin: bottom;
+            animation: rise 1.2s ease-in-out infinite alternate;
+        }
+        .bars i:nth-child(1) { height: 20%; }
+        .bars i:nth-child(2) { height: 40%; animation-delay: -0.2s; }
+        .bars i:nth-child(3) { height: 60%; animation-delay: -0.4s; }
+        .bars i:nth-child(4) { height: 80%; animation-delay: -0.6s; }
+        .bars i:nth-child(5) { height: 100%; animation-delay: -0.8s; }
+
+        @keyframes rise { to { transform: scaleY(0.4); opacity: 0.6; } }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--ink);
+            font-weight: 600;
+            text-decoration: none;
+            transition: border-color 0.2s, transform 0.2s, background-color 0.2s;
+        }
+        .btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .btn.primary { border-color: var(--accent); background: var(--accent); color: #16122b; }
+        .btn.primary:hover { background: #bba5fc; }
+        .btn small { font-weight: 400; opacity: 0.75; }
+        .btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+
+        /* Sections */
+        section { margin-bottom: 48px; }
+
+        h2 {
+            margin: 0 0 16px;
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .card {
+            padding: 20px 24px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+
+        .needs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .needs li { padding: 16px 18px; }
+        .needs strong { display: block; margin-bottom: 4px; }
+        .needs span { color: var(--muted); font-size: 0.92rem; }
+
+        ol.steps {
+            display: grid;
+            gap: 14px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: step;
+        }
+        ol.steps > li {
+            position: relative;
+            padding-left: 44px;
+            counter-increment: step;
+        }
+        ol.steps > li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: var(--raised);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        ol.steps strong { color: var(--ink); }
+        ol.steps p { margin: 0; color: var(--muted); }
+        ol.steps ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); }
+
+        .clips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .clips span {
+            padding: 2px 10px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--ink);
+            font: 0.8rem/1.6 ui-monospace, 'Cascadia Mono', monospace;
+        }
+
+        code, kbd {
+            padding: 1px 6px;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            background: var(--raised);
+            color: var(--ink);
+            font: 0.88em ui-monospace, 'Cascadia Mono', monospace;
+        }
+
+        pre {
+            overflow-x: auto;
+            margin: 8px 0 0;
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #0a0a14;
+            color: var(--ink);
+            font: 0.9rem/1.6 ui-monospace, 'Cascadia Mono', monospace;
+        }
+
+        .note {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            background: var(--raised);
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .under-hood { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+        .under-hood li { padding: 16px 20px; }
+        .under-hood strong { display: block; margin-bottom: 2px; }
+        .under-hood span { color: var(--muted); font-size: 0.95rem; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <a class="back" href="../index.html">← Portfolio</a>
+
+    <p class="tag">Vue · TypeScript · Spotify API</p>
+    <h1>Do You Know Your Playlist?</h1>
+    <p class="lede">
+        A guessing game played on your own Spotify playlist. You hear a <strong>0.1&nbsp;second</strong> clip of a song
+        and name it. Every wrong guess or skip makes the clip longer, and every second costs you points.
+    </p>
+
+    <!--
+        To add the demo: save a screen recording next to this page as demo.mp4
+        (20-30 s, no sound needed, under 5 MB), then set data-video="demo.mp4" below.
+    -->
+    <div class="demo" id="demo" data-video="">
+        <div class="demo-placeholder" id="demo-placeholder">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <p>Demo video coming soon.</p>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a class="btn primary" href="do-you-know-your-playlist.zip" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6zM4 19h16v2H4z"/></svg>
+            Download the app <small>.zip · 50&nbsp;KB</small>
+        </a>
+        <a class="btn" href="https://github.com/Kassabiii/music-player">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+            View the code
+        </a>
+    </div>
+
+    <section aria-labelledby="needs-title">
+        <h2 id="needs-title">What you need</h2>
+        <ul class="needs">
+            <li class="card"><strong>Spotify Premium</strong><span>Spotify only lets Premium accounts play music in the browser.</span></li>
+            <li class="card"><strong>A computer</strong><span>Chrome, Edge or Firefox. Phone browsers can’t run the Spotify player.</span></li>
+            <li class="card"><strong>Node.js 20+</strong><span>To run it on your machine. Free from <a href="https://nodejs.org">nodejs.org</a>.</span></li>
+        </ul>
+    </section>
+
+    <section aria-labelledby="play-title">
+        <h2 id="play-title">How to play</h2>
+        <ol class="steps card">
+            <li><strong>Connect Spotify</strong> <p>and allow access to your playlists.</p></li>
+            <li><strong>Pick a playlist</strong> <p>and how many songs to play: 5, 10 or 20.</p></li>
+            <li>
+                <strong>Listen</strong>
+                <p>Press ▶ or <kbd>Space</kbd>. You hear the very start of a random song from that playlist.</p>
+                <div class="clips" aria-label="Clip lengths"><span>0.1s</span><span>0.5s</span><span>1s</span><span>2s</span><span>4s</span><span>8s</span></div>
+            </li>
+            <li>
+                <strong>Guess</strong>
+                <p>Type a title or artist, then pick the song with <kbd>↑</kbd> <kbd>↓</kbd> and <kbd>Enter</kbd>.</p>
+                <ul>
+                    <li>Right: points, from 100 at 0.1&nbsp;s down to 10 at 8&nbsp;s.</li>
+                    <li>Wrong or <em>Skip</em>: the next, longer clip plays straight away.</li>
+                    <li>Still stuck after 8&nbsp;s: the answer is revealed.</li>
+                </ul>
+            </li>
+            <li><strong>Enjoy the song</strong> <p>Play, pause or resume the full track, then move on to the next one.</p></li>
+            <li><strong>See your score</strong> <p>and every answer at the end. Play again or try another playlist.</p></li>
+        </ol>
+    </section>
+
+    <section aria-labelledby="run-title">
+        <h2 id="run-title">Run it on your computer</h2>
+        <ol class="steps card">
+            <li><strong>Unzip</strong> <p>the download and open a terminal in the <code>do-you-know-your-playlist</code> folder.</p></li>
+            <li>
+                <strong>Create a Spotify app</strong>
+                <p>In the <a href="https://developer.spotify.com/dashboard">Spotify Developer Dashboard</a>, click <em>Create app</em>:</p>
+                <ul>
+                    <li>Redirect URI: <code>http://127.0.0.1:5173</code></li>
+                    <li>Tick <strong>Web API</strong> and <strong>Web Playback SDK</strong>, then save.</li>
+                    <li>Copy the <strong>Client ID</strong> from Settings.</li>
+                    <li>Under <strong>User Management</strong>, add the Spotify accounts that will play.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Add your Client ID</strong>
+                <p>Copy <code>.env.example</code> to a new file <code>.env.local</code> and paste the ID after <code>VITE_SPOTIFY_CLIENT_ID=</code>. You never need the Client secret.</p>
+            </li>
+            <li>
+                <strong>Install and start</strong>
+                <pre>npm install
+npm run dev</pre>
+            </li>
+            <li><strong>Open <a href="http://127.0.0.1:5173">http://127.0.0.1:5173</a></strong> <p>Use this exact address: Spotify rejects <code>localhost</code>.</p></li>
+        </ol>
+        <p class="note">The <code>README.md</code> inside the zip has the same steps, plus how to put it online with Netlify and a troubleshooting table.</p>
+    </section>
+
+    <section aria-labelledby="hood-title">
+        <h2 id="hood-title">Under the hood</h2>
+        <ul class="under-hood">
+            <li class="card"><strong>Clips accurate to a tenth of a second</strong><span>Each song is loaded muted and parked at 0:00, so a clip is a local play/pause in the browser rather than a slow network call.</span></li>
+            <li class="card"><strong>No server, no stored data</strong><span>Spotify login uses PKCE entirely in the browser; tokens live only for the session.</span></li>
+            <li class="card"><strong>Fair guessing</strong><span>Suggestions come only from the chosen playlist, songs never repeat, and a remaster or live version of the right song counts.</span></li>
+        </ul>
+    </section>
+</main>
+
+<script>
+    // The demo video is only requested once one has been added (see the comment above .demo).
+    (function () {
+        var demo = document.getElementById('demo');
+        var file = demo.dataset.video;
+        if (!file) return;
+
+        var video = document.createElement('video');
+        video.src = file;
+        video.controls = true;
+        video.muted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.setAttribute('aria-label', 'Demo of a game round');
+        video.addEventListener('loadeddata', function () {
+            document.getElementById('demo-placeholder').hidden = true;
+        });
+        demo.prepend(video);
+    })();
+</script>
+</body>
+</html>
