@@ -1,1 +1,3 @@
 .playwright-mcp/
+# Separate repo (Kassabiii/music-player), deployed on its own.
+musicplayer/

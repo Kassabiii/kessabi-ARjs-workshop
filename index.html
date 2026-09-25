@@ -38,7 +38,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
             gap: 1.2rem;
             width: 100%;
             max-width: 800px;
@@ -86,10 +86,23 @@
             line-height: 1.5;
         }
 
-        .res-section {
-            margin-top: 2rem;
+        .section {
             width: 100%;
             max-width: 800px;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            margin-bottom: 1rem;
+            color: #a78bfa;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .res-section {
+            margin-top: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -147,42 +160,56 @@
     <h1>Portfolio</h1>
     <p class="subtitle">Pick a project to explore</p>
 
-    <div class="grid">
-        <a class="card" href="1-cube.html">
-            <span class="number">AR · 01</span>
-            <span class="title">Cube</span>
-            <span class="desc">Render a basic 3D cube on a marker using AR.js.</span>
-        </a>
-        <a class="card" href="2-earth_sphere.html">
-            <span class="number">AR · 02</span>
-            <span class="title">Earth Sphere</span>
-            <span class="desc">Display a textured Earth sphere on a marker.</span>
-        </a>
-        <a class="card" href="3-custom_marker.html">
-            <span class="number">AR · 03</span>
-            <span class="title">Object Switcher</span>
-            <span class="desc">Switch between Earth, Saturn and three shapes on the Hiro marker.</span>
-        </a>
-        <a class="card" href="4-location_based_Object.html">
-            <span class="number">AR · 04</span>
-            <span class="title">Location-Based Object</span>
-            <span class="desc">Place a 3D object at a real-world GPS location.</span>
-        </a>
-        <a class="card js-card" href="Verb-master/index.html">
-            <span class="number">JS</span>
-            <span class="title">Verb Master</span>
-            <span class="desc">Practise the past forms of 162 irregular English verbs, with badges and progress charts.</span>
-        </a>
-    </div>
-
-    <div class="res-section">
-        <p class="res-label">Camera Resolution — pick what works best for you</p>
-        <div class="res-buttons">
-            <button class="res-btn" data-w="640" data-h="480">480p <span>640×480</span></button>
-            <button class="res-btn" data-w="1280" data-h="720">720p <span>1280×720</span></button>
-            <button class="res-btn" data-w="1920" data-h="1080">1080p <span>1920×1080</span></button>
+    <section class="section" aria-labelledby="demos-title">
+        <h2 class="section-title" id="demos-title">Demos</h2>
+        <div class="grid">
+            <a class="card" href="1-cube.html">
+                <span class="number">AR · 01</span>
+                <span class="title">Cube</span>
+                <span class="desc">Render a basic 3D cube on a marker using AR.js.</span>
+            </a>
+            <a class="card" href="2-earth_sphere.html">
+                <span class="number">AR · 02</span>
+                <span class="title">Earth Sphere</span>
+                <span class="desc">Display a textured Earth sphere on a marker.</span>
+            </a>
+            <a class="card" href="3-custom_marker.html">
+                <span class="number">AR · 03</span>
+                <span class="title">Object Switcher</span>
+                <span class="desc">Switch between Earth, Saturn and three shapes on the Hiro marker.</span>
+            </a>
+            <a class="card" href="4-location_based_Object.html">
+                <span class="number">AR · 04</span>
+                <span class="title">Location-Based Object</span>
+                <span class="desc">Place a 3D object at a real-world GPS location.</span>
+            </a>
         </div>
-    </div>
+
+        <div class="res-section">
+            <p class="res-label">Camera Resolution — pick what works best for you</p>
+            <div class="res-buttons">
+                <button class="res-btn" data-w="640" data-h="480">480p <span>640×480</span></button>
+                <button class="res-btn" data-w="1280" data-h="720">720p <span>1280×720</span></button>
+                <button class="res-btn" data-w="1920" data-h="1080">1080p <span>1920×1080</span></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" aria-labelledby="personal-title">
+        <h2 class="section-title" id="personal-title">Personal projects</h2>
+        <div class="grid">
+            <a class="card js-card" href="Verb-master/index.html">
+                <span class="number">JS</span>
+                <span class="title">Verb Master</span>
+                <span class="desc">Practise the past forms of 162 irregular English verbs, with badges and progress charts.</span>
+            </a>
+            <a class="card js-card" href="https://github.com/Kassabiii/music-player">
+                <span class="number">Vue · Spotify API</span>
+                <span class="title">Do You Know Your Playlist?</span>
+                <span class="desc">Guess songs from your own Spotify playlist from a 0.1 second clip. Every skip makes the clip longer. Needs Spotify Premium on desktop.</span>
+            </a>
+        </div>
+    </section>
 
     <script>
         const saved = JSON.parse(localStorage.getItem('arResolution') || '{"w":1280,"h":720}');
