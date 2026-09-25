@@ -4,5 +4,3 @@
 # Personal files that must never be published (CV with phone number, etc.)
 private/
 
-# Old location of the Spotify game's source (now its own folder: Desktop/DYKYP).
-musicplayer/
