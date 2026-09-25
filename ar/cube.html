@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Cube on a marker · AR demo</title>
     <meta name="description" content="A red cube that appears on the Hiro marker, built with A-Frame and AR.js.">
-    <link rel="stylesheet" href="shared/ar.css?v=3">
+    <link rel="stylesheet" href="shared/ar.css?v=4">
     <script>try { if (localStorage.getItem('arHiroMarkerSeen') === '1') document.documentElement.classList.add('ar-returning'); } catch (e) {}</script>
     <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
-    <script defer src="shared/ar.js?v=2"></script>
+    <script defer src="shared/ar.js?v=4"></script>
 </head>
 <body class="ar-page">
     <main id="ar-intro" class="ar-panel">
@@ -51,7 +51,9 @@
         <a-scene embedded vr-mode-ui="enabled: false"
             arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: markers/camera_para.dat;">
             <a-marker type="pattern" url="markers/hiro.patt">
-                <a-box position="0 0.5 0" rotation="0 45 45" material="color: red;"></a-box>
+                <a-entity data-ar-size>
+                    <a-box position="0 0.5 0" rotation="0 45 45" material="color: red;"></a-box>
+                </a-entity>
             </a-marker>
             <a-entity camera></a-entity>
         </a-scene>

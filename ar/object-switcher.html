@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Object switcher · AR demo</title>
     <meta name="description" content="Switch between Earth, Saturn and three shapes on the Hiro marker, built with A-Frame and AR.js.">
-    <link rel="stylesheet" href="shared/ar.css?v=3">
+    <link rel="stylesheet" href="shared/ar.css?v=4">
     <script>try { if (localStorage.getItem('arHiroMarkerSeen') === '1') document.documentElement.classList.add('ar-returning'); } catch (e) {}</script>
     <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
-    <script defer src="shared/ar.js?v=2"></script>
+    <script defer src="shared/ar.js?v=4"></script>
     <style>
         :root { --stage-bottom: 84px; }
         #object-selector {
@@ -97,33 +97,36 @@
             </a-assets>
 
             <a-marker type="pattern" url="markers/hiro.patt">
-                <a-sphere id="obj-earth" position="0 0.5 0"
-                    material="src: #earth-sphere"
-                    animation__rotate="property: rotation; dur: 8000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;">
-                </a-sphere>
+                <!-- The size slider scales this wrapper, so every object shares one size. -->
+                <a-entity data-ar-size>
+                    <a-sphere id="obj-earth" position="0 0.5 0"
+                        material="src: #earth-sphere"
+                        animation__rotate="property: rotation; dur: 8000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;">
+                    </a-sphere>
 
-                <!-- The Saturn model (600 KB) only downloads the first time it's picked. -->
-                <a-entity id="obj-saturn" position="0 0.5 0" scale="0.15 0.15 0.15"
-                    animation__rotate="property: rotation; dur: 10000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
-                    visible="false">
+                    <!-- The Saturn model (600 KB) only downloads the first time it's picked. -->
+                    <a-entity id="obj-saturn" position="0 0.5 0" scale="0.15 0.15 0.15"
+                        animation__rotate="property: rotation; dur: 10000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                        visible="false">
+                    </a-entity>
+
+                    <a-box id="obj-box" position="0 0.5 0" color="#E74C3C"
+                        animation__rotate="property: rotation; dur: 6000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                        visible="false">
+                    </a-box>
+
+                    <a-torus id="obj-torus" position="0 0.5 0" color="#9B59B6"
+                        radius="0.4" radius-tubular="0.1"
+                        animation__rotate="property: rotation; dur: 5000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                        visible="false">
+                    </a-torus>
+
+                    <a-cone id="obj-cone" position="0 0.5 0" color="#2ECC71"
+                        radius-bottom="0.4" height="0.9"
+                        animation__rotate="property: rotation; dur: 7000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
+                        visible="false">
+                    </a-cone>
                 </a-entity>
-
-                <a-box id="obj-box" position="0 0.5 0" color="#E74C3C"
-                    animation__rotate="property: rotation; dur: 6000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
-                    visible="false">
-                </a-box>
-
-                <a-torus id="obj-torus" position="0 0.5 0" color="#9B59B6"
-                    radius="0.4" radius-tubular="0.1"
-                    animation__rotate="property: rotation; dur: 5000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
-                    visible="false">
-                </a-torus>
-
-                <a-cone id="obj-cone" position="0 0.5 0" color="#2ECC71"
-                    radius-bottom="0.4" height="0.9"
-                    animation__rotate="property: rotation; dur: 7000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;"
-                    visible="false">
-                </a-cone>
             </a-marker>
 
             <a-entity camera></a-entity>

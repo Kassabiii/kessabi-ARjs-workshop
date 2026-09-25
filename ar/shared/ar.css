@@ -163,6 +163,39 @@ body.ar-contained video {
     text-align: center;
 }
 
+/* Size slider, centred along the bottom of the camera window. */
+.ar-size {
+    position: fixed;
+    z-index: 1001;
+    left: calc(var(--stage-x, 0px) + var(--stage-w, 100vw) / 2);
+    top: calc(var(--stage-y, 0px) + var(--stage-h, 100vh) - 64px);
+    transform: translateX(-50%);
+    width: min(340px, calc(var(--stage-w, 100vw) - 24px));
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: var(--overlay);
+    color: var(--ink);
+    font-size: 0.9rem;
+}
+.ar-size input {
+    flex: 1;
+    min-width: 0;
+    height: 28px;
+    margin: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+.ar-size output {
+    min-width: 3.2em;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
 .ar-error-icon {
     width: 44px;
     height: 44px;

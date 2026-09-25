@@ -131,6 +131,40 @@ window.ARShell = (() => {
         });
     }
 
+    // A "Size" slider over the bottom of the camera window. It scales `target` (an A-Frame
+    // entity) relative to the scale it started with, and remembers the choice per page.
+    function addSizeSlider(target, { min = 0.25, max = 3, step = 0.05 } = {}) {
+        const base = target.object3D.scale.clone();
+        const key = 'arSize:' + location.pathname;
+        let saved = 1;
+        try { saved = parseFloat(localStorage.getItem(key)) || 1; } catch (e) {}
+
+        const box = document.createElement('div');
+        box.className = 'ar-size';
+        box.innerHTML = '<label for="ar-size-input">Size</label>' +
+            '<input id="ar-size-input" type="range">' +
+            '<output for="ar-size-input" aria-hidden="true"></output>';
+        const input = box.querySelector('input');
+        const output = box.querySelector('output');
+        input.min = min;
+        input.max = max;
+        input.step = step;
+        input.value = Math.min(max, Math.max(min, saved));
+
+        function apply() {
+            const size = parseFloat(input.value);
+            target.object3D.scale.set(base.x * size, base.y * size, base.z * size);
+            const percent = Math.round(size * 100) + '%';
+            output.textContent = percent;
+            input.setAttribute('aria-valuetext', percent);
+            try { localStorage.setItem(key, String(size)); } catch (e) {}
+        }
+
+        input.addEventListener('input', apply);
+        document.body.appendChild(box);
+        apply();
+    }
+
     function watchMarker(marker, hint = 'Point your camera at the marker') {
         let lostTimer = null;
         status(hint);
@@ -196,6 +230,9 @@ window.ARShell = (() => {
                 await waitForVideo();
                 rememberMarker();
                 watchMarker(document.querySelector('a-marker'));
+                // Objects wrapped in <a-entity data-ar-size> get a size slider.
+                const sizeTarget = document.querySelector('[data-ar-size]');
+                if (sizeTarget) addSizeSlider(sizeTarget);
                 if (onStarted) onStarted();
             } catch (kind) {
                 showError(typeof kind === 'string' ? kind : 'generic');
@@ -203,5 +240,5 @@ window.ARShell = (() => {
         });
     }
 
-    return { status, showError, requestCamera, requestLocation, waitForVideo, watchMarker, enterCamera, librariesLoaded, initMarkerPage };
+    return { status, showError, requestCamera, requestLocation, waitForVideo, watchMarker, addSizeSlider, enterCamera, librariesLoaded, initMarkerPage };
 })();
