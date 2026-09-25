@@ -6,6 +6,7 @@ AR, e-learning and web projects. Plain HTML, CSS and JavaScript: no build step, 
 
 ```
 index.html            Hub page (links to every project)
+cv/                   Public CV (PDF). The original stays in private/
 ar/                   AR.js demos
   cube.html             01 · Cube on the Hiro marker
   earth-sphere.html     02 · Textured Earth on the marker
