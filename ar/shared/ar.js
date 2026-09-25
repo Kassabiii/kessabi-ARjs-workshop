@@ -71,6 +71,35 @@ window.ARShell = (() => {
         });
     }
 
+    // AR.js stretches the camera to cover the whole window, which crops it (a lot, on a phone
+    // held upright) and can leave the 3D layer out of line with the video. Instead, fit the
+    // whole camera image into a centred window and pin the video and the 3D canvas to exactly
+    // that box. The box keeps the camera's own shape, so nothing is cropped or stretched.
+    // Room around the window comes from the --stage-* CSS variables in ar.css.
+    function containCamera(video) {
+        const root = document.documentElement;
+        const px = name => parseFloat(getComputedStyle(root).getPropertyValue(name)) || 0;
+
+        function place() {
+            const camW = video.videoWidth, camH = video.videoHeight;
+            if (!camW || !camH) return;
+            const top = px('--stage-top'), bottom = px('--stage-bottom'), side = px('--stage-side');
+            const maxW = Math.min(innerWidth - 2 * side, px('--stage-max-width') || Infinity);
+            const maxH = innerHeight - top - bottom;
+            const scale = Math.min(maxW / camW, maxH / camH);
+            const w = Math.floor(camW * scale), h = Math.floor(camH * scale);
+            root.style.setProperty('--stage-w', w + 'px');
+            root.style.setProperty('--stage-h', h + 'px');
+            root.style.setProperty('--stage-x', Math.round((innerWidth - w) / 2) + 'px');
+            root.style.setProperty('--stage-y', Math.round(top + (maxH - h) / 2) + 'px');
+        }
+
+        document.body.classList.add('ar-contained');
+        place();
+        video.addEventListener('resize', place); // the camera can switch resolution after starting
+        window.addEventListener('resize', place);
+    }
+
     // Resolves once AR.js's video is actually playing.
     function waitForVideo(timeoutMs = 20000) {
         return new Promise((resolve, reject) => {
@@ -80,6 +109,7 @@ window.ARShell = (() => {
                 const video = document.querySelector('video');
                 if (video && video.readyState >= 2 && !video.paused) {
                     clearInterval(timer);
+                    containCamera(video);
                     resolve(video);
                     return;
                 }
