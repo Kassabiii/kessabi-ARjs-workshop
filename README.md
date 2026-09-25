@@ -31,3 +31,13 @@ python -m http.server 8000
 
 Then open <http://localhost:8000>. The AR pages need HTTPS (or localhost) for camera access,
 so test them on a phone through the deployed site.
+
+## Updating the Spotify game download
+
+After committing changes in `music-player/`, rebuild the zip from that folder:
+
+```
+git archive --format=zip --prefix=do-you-know-your-playlist/ -o ../playlist-game/do-you-know-your-playlist.zip HEAD
+```
+
+`git archive` only packs committed files, so `node_modules`, `dist` and `.env.local` never end up in it.
