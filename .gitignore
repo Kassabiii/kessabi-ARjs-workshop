@@ -4,7 +4,5 @@
 # Personal files that must never be published (CV with phone number, etc.)
 private/
 
-# The music player app is its own repo (Kassabiii/music-player).
-# Its portfolio page is playlist-game/.
-music-player/
+# Old location of the Spotify game's source (now its own folder: Desktop/DYKYP).
 musicplayer/

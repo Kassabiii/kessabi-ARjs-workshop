@@ -15,11 +15,13 @@ ar/                   AR.js demos
   markers/              Hiro marker image + pattern, camera calibration
   models/               Earth texture, Saturn model
 verb-master/          Irregular verbs quiz (JS), with its course documents in docs/
-playlist-game/        Page for the Spotify game: demo, download, how to use it
+dykyp/                Page for the Spotify game (DYKYP): demo, download, how to use it
 ```
 
-Not published (git-ignored): `private/` (CV and personal files) and `music-player/`
-(the Spotify game's source, a separate repo: [Kassabiii/music-player](https://github.com/Kassabiii/music-player)).
+Not published (git-ignored): `private/` (CV and personal files).
+
+The Spotify game's source is a separate repo, [Kassabiii/DYKYP](https://github.com/Kassabiii/DYKYP),
+kept next to this folder (`Desktop/DYKYP`), not inside it.
 
 ## Run locally
 
@@ -34,10 +36,10 @@ so test them on a phone through the deployed site.
 
 ## Updating the Spotify game download
 
-After committing changes in `music-player/`, rebuild the zip from that folder:
+After committing changes in the DYKYP repo, rebuild the zip from that folder:
 
 ```
-git archive --format=zip --prefix=do-you-know-your-playlist/ -o ../playlist-game/do-you-know-your-playlist.zip HEAD
+git archive --format=zip --prefix=DYKYP/ -o ../portfolio/dykyp/DYKYP.zip HEAD
 ```
 
 `git archive` only packs committed files, so `node_modules`, `dist` and `.env.local` never end up in it.

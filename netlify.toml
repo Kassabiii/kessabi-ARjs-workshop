@@ -1,0 +1,25 @@
+# Netlify settings for the portfolio.
+# Plain HTML/CSS/JS: no build step, the repo root is published as-is.
+# (Git-ignored folders such as private/ and DYKYP/ are never in the repo, so never published.)
+
+[build]
+  publish = "."
+
+# Security headers for every page. The AR demos need the camera and GPS on this site.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self), geolocation=(self), microphone=()"
+
+# Markers and 3D models rarely change: let browsers keep them for a week.
+[[headers]]
+  for = "/ar/markers/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/ar/models/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
