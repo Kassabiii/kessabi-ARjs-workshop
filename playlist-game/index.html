@@ -275,10 +275,10 @@
     </p>
 
     <!--
-        To add the demo: save a screen recording next to this page (e.g. demo.webm or demo.mp4)
-        (no sound needed, keep it under ~5 MB), then set data-video to its file name below.
+        To change the demo: put a recording next to this page (.mp4 plays in every browser;
+        keep it under ~5 MB) and set data-video to its file name below.
     -->
-    <div class="demo" id="demo" data-video="demo.webm">
+    <div class="demo" id="demo" data-video="demo.mp4">
         <div class="demo-placeholder" id="demo-placeholder">
             <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <p>Demo video coming soon.</p>
@@ -377,10 +377,9 @@ npm run dev</pre>
         var video = document.createElement('video');
         video.src = file;
         video.controls = true;
-        video.muted = true;
         video.loop = true;
-        video.autoplay = true;
         video.playsInline = true;
+        video.preload = 'auto';
         video.setAttribute('aria-label', 'Demo of a game round');
 
         video.addEventListener('loadedmetadata', function () {
@@ -394,13 +393,15 @@ npm run dev</pre>
                 video.addEventListener('durationchange', function rewind() {
                     video.removeEventListener('durationchange', rewind);
                     video.currentTime = 0;
-                    video.play().catch(function () {});
                 });
             }
         });
         video.addEventListener('loadeddata', function () {
             document.getElementById('demo-placeholder').hidden = true;
-        });
+            // Start with sound. Most browsers refuse sound before the visitor has interacted
+            // with the site; the video then waits on its first frame for them to press play.
+            video.play().catch(function () {});
+        }, { once: true });
         demo.prepend(video);
     })();
 </script>
