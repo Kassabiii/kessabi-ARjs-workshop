@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Earth on a marker · AR demo</title>
     <meta name="description" content="A rotating, textured Earth that appears on the Hiro marker, built with A-Frame and AR.js.">
-    <link rel="stylesheet" href="assets/ar.css">
+    <link rel="stylesheet" href="shared/ar.css">
     <script>try { if (localStorage.getItem('arHiroMarkerSeen') === '1') document.documentElement.classList.add('ar-returning'); } catch (e) {}</script>
     <script defer src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@2.1.7/aframe/build/aframe-ar.js"></script>
-    <script defer src="assets/ar.js"></script>
+    <script defer src="shared/ar.js"></script>
 </head>
 <body class="ar-page">
     <main id="ar-intro" class="ar-panel">
         <div class="ar-panel-inner">
-            <a class="ar-back" href="index.html">← Portfolio</a>
+            <a class="ar-back" href="../index.html">← Portfolio</a>
             <h1>Earth on a marker</h1>
             <p>A rotating Earth appears on top of the Hiro marker when your camera sees it.</p>
             <p class="ar-returning-note">Same Hiro marker as the other demos. Have it ready, then tap Start camera. <button type="button" class="ar-link" id="ar-show-howto">Show the marker</button></p>
@@ -24,11 +24,11 @@
                 <li>Point your camera at the marker, about 30 cm away.</li>
             </ol>
             <figure class="ar-marker ar-howto">
-                <img src="data/pattern-hiro.png" width="512" height="512" alt="Hiro marker: a thick black square with the word Hiro inside">
+                <img src="markers/hiro.png" width="512" height="512" alt="Hiro marker: a thick black square with the word Hiro inside">
             </figure>
             <div class="ar-actions">
                 <button id="ar-start" class="ar-btn primary" type="button" disabled>Loading AR…</button>
-                <a class="ar-btn ar-howto" href="data/pattern-hiro.png" download="hiro-marker.png">Download marker</a>
+                <a class="ar-btn ar-howto" href="markers/hiro.png" download="hiro-marker.png">Download marker</a>
             </div>
             <p class="ar-note ar-howto">Works best on a phone. The video stays on your device.</p>
         </div>
@@ -36,7 +36,7 @@
 
     <section id="ar-error" class="ar-panel" hidden aria-live="assertive">
         <div class="ar-panel-inner">
-            <a class="ar-back" href="index.html">← Portfolio</a>
+            <a class="ar-back" href="../index.html">← Portfolio</a>
             <div class="ar-error-icon" aria-hidden="true">!</div>
             <h1 id="ar-error-title">Camera is blocked</h1>
             <p id="ar-error-text"></p>
@@ -44,16 +44,16 @@
         </div>
     </section>
 
-    <a id="ar-back-float" class="ar-back ar-back-float" href="index.html" hidden>← Portfolio</a>
+    <a id="ar-back-float" class="ar-back ar-back-float" href="../index.html" hidden>← Portfolio</a>
     <div id="ar-status" class="ar-status" role="status" aria-live="polite" hidden></div>
 
     <template id="ar-scene">
         <a-scene embedded vr-mode-ui="enabled: false"
-            arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: data/camera_para.dat;">
+            arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: markers/camera_para.dat;">
             <a-assets>
-                <img id="earth-sphere" src="earth-sphere.jpg" alt="">
+                <img id="earth-sphere" src="models/earth-sphere.jpg" alt="">
             </a-assets>
-            <a-marker type="pattern" url="data/pattern-hiro.patt">
+            <a-marker type="pattern" url="markers/hiro.patt">
                 <a-sphere position="0 0.5 0"
                     material="src: #earth-sphere"
                     animation__rotate="property: rotation; dur: 8000; easing: linear; from: 0 0 0; to: 0 360 0; loop: true;">

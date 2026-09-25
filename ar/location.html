@@ -6,13 +6,13 @@
     <title>Location-based object · AR demo</title>
     <meta name="description" content="Pin a spot on the map, then find a 3D satellite there through your phone's camera. Built with AR.js, A-Frame and Leaflet.">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <link rel="stylesheet" href="assets/ar.css">
+    <link rel="stylesheet" href="shared/ar.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script defer src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <!-- Pinned to the last commit of the archived AR.js repo (same file raw.githack served from master). -->
     <script defer src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js@024318c67121bd57045186b83b42f10c6560a34a/aframe/build/aframe-ar.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@676f3628bb477d646293f9743eda31aca556114a/dist/aframe-extras.loaders.min.js"></script>
-    <script defer src="assets/ar.js"></script>
+    <script defer src="shared/ar.js"></script>
     <style>
         #ar-intro.map-intro { padding: 0; display: flex; flex-direction: column; }
         #map { flex: 1; min-height: 200px; }
@@ -33,7 +33,7 @@
     <main id="ar-intro" class="ar-panel map-intro">
         <div id="map" aria-label="Map: tap to place the satellite"></div>
         <div id="map-panel">
-            <a class="ar-back" href="index.html">← Portfolio</a>
+            <a class="ar-back" href="../index.html">← Portfolio</a>
             <h1>Location-based object</h1>
             <p id="map-hint">Tap the map close to where you are (within about 200 m) to place a satellite there. Then go outside and look for it through your camera.</p>
             <p id="coords-display">No location picked yet</p>
@@ -46,7 +46,7 @@
 
     <section id="ar-error" class="ar-panel" hidden aria-live="assertive">
         <div class="ar-panel-inner">
-            <a class="ar-back" href="index.html">← Portfolio</a>
+            <a class="ar-back" href="../index.html">← Portfolio</a>
             <div class="ar-error-icon" aria-hidden="true">!</div>
             <h1 id="ar-error-title">Camera is blocked</h1>
             <p id="ar-error-text"></p>
@@ -54,7 +54,7 @@
         </div>
     </section>
 
-    <a id="ar-back-float" class="ar-back ar-back-float" href="index.html" hidden>← Portfolio</a>
+    <a id="ar-back-float" class="ar-back ar-back-float" href="../index.html" hidden>← Portfolio</a>
     <div id="ar-status" class="ar-status" role="status" aria-live="polite" hidden></div>
 
     <script>
@@ -123,11 +123,11 @@
             scene.setAttribute('vr-mode-ui', 'enabled: false');
             scene.setAttribute('embedded', '');
             scene.setAttribute('arjs',
-                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; debugUIEnabled: false; cameraParametersUrl: data/camera_para.dat;`
+                `sourceType: webcam; sourceWidth: ${res.w}; sourceHeight: ${res.h}; debugUIEnabled: false; cameraParametersUrl: markers/camera_para.dat;`
             );
 
             const entity = document.createElement('a-entity');
-            entity.setAttribute('gltf-model', 'saturn-orbiter.gltf');
+            entity.setAttribute('gltf-model', 'models/saturn-orbiter.gltf');
             entity.setAttribute('rotation', '0 180 0');
             // About 20 m across, so it's visible from a street or park away.
             entity.setAttribute('scale', '3 3 3');

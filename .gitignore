@@ -1,3 +1,10 @@
+# Test screenshots from the Playwright MCP
 .playwright-mcp/
-# Separate repo (Kassabiii/music-player), deployed on its own.
+
+# Personal files that must never be published (CV with phone number, etc.)
+private/
+
+# The music player app is its own repo (Kassabiii/music-player).
+# Its portfolio page is playlist-game/.
+music-player/
 musicplayer/
