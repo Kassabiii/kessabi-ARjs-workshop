@@ -86,7 +86,7 @@
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* never crop the recording */
         }
 
         .demo-placeholder {
@@ -275,10 +275,10 @@
     </p>
 
     <!--
-        To add the demo: save a screen recording next to this page as demo.mp4
-        (20-30 s, no sound needed, under 5 MB), then set data-video="demo.mp4" below.
+        To add the demo: save a screen recording next to this page (e.g. demo.webm or demo.mp4)
+        (no sound needed, keep it under ~5 MB), then set data-video to its file name below.
     -->
-    <div class="demo" id="demo" data-video="">
+    <div class="demo" id="demo" data-video="demo.webm">
         <div class="demo-placeholder" id="demo-placeholder">
             <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             <p>Demo video coming soon.</p>
@@ -382,6 +382,22 @@ npm run dev</pre>
         video.autoplay = true;
         video.playsInline = true;
         video.setAttribute('aria-label', 'Demo of a game round');
+
+        video.addEventListener('loadedmetadata', function () {
+            // Give the frame the recording's own shape, so nothing is cropped.
+            demo.style.aspectRatio = video.videoWidth + ' / ' + video.videoHeight;
+
+            // Browser screen recordings (.webm) don't store their length, which breaks the
+            // progress bar. Jumping to the end once makes the browser work it out.
+            if (video.duration === Infinity) {
+                video.currentTime = 1e9;
+                video.addEventListener('durationchange', function rewind() {
+                    video.removeEventListener('durationchange', rewind);
+                    video.currentTime = 0;
+                    video.play().catch(function () {});
+                });
+            }
+        });
         video.addEventListener('loadeddata', function () {
             document.getElementById('demo-placeholder').hidden = true;
         });
